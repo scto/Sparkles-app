@@ -14,17 +14,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.transition.TransitionManager;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.graphics.Insets;
@@ -33,13 +28,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.sidesheet.SideSheetBehavior;
 import com.google.android.material.sidesheet.SideSheetDialog;
 import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityMainBinding;
-//import com.sparkleside.databinding.ToolboxSidebinding;
+// import com.sparkleside.databinding.ToolboxSidebinding;
 import com.sparkleside.ui.base.BaseActivity;
 import com.sparkleside.ui.components.ExpandableLayout;
 import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
@@ -57,7 +50,8 @@ public class MainActivity extends BaseActivity {
   private FileTreeIconProvider fileIconProvider;
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
-  //private ToolboxSidebinding binding;
+
+  // private ToolboxSidebinding binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -73,59 +67,62 @@ public class MainActivity extends BaseActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
     setSupportActionBar(binding.toolbar);
-    
+
     /*Permission Controller by Rakhmonov Bobur*/
-     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { 
-     if (!Environment.isExternalStorageManager()) { 
-     MaterialAlertDialogBuilder perm = new MaterialAlertDialogBuilder(this);
-     LayoutInflater permview= getLayoutInflater();
-     View perview = (View) permview.inflate(R.layout.dialogpermission, null);
-     perm.setView(perview);
-     final TextView positive = (TextView)
-     perview.findViewById(android.R.id.button1);
-     final TextView negative = (TextView)
-     perview.findViewById(android.R.id.button3);
-     positive.setOnClickListener(v -> {
-     Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-   intent.setData(Uri.parse("package:" + getPackageName()));
-   startActivity(intent);
-     });
-     negative.setOnClickListener(v ->{ finishAffinity();});
-     perm.setCancelable(false);
-     perm.create().show();           
-     
-     
-  
-     } 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      if (!Environment.isExternalStorageManager()) {
+        MaterialAlertDialogBuilder perm = new MaterialAlertDialogBuilder(this);
+        LayoutInflater permview = getLayoutInflater();
+        View perview = (View) permview.inflate(R.layout.dialogpermission, null);
+        perm.setView(perview);
+        final TextView positive = (TextView) perview.findViewById(android.R.id.button1);
+        final TextView negative = (TextView) perview.findViewById(android.R.id.button3);
+        positive.setOnClickListener(
+            v -> {
+              Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+              intent.setData(Uri.parse("package:" + getPackageName()));
+              startActivity(intent);
+            });
+        negative.setOnClickListener(
+            v -> {
+              finishAffinity();
+            });
+        perm.setCancelable(false);
+        perm.create().show();
       }
-    
-    int statusBarHeight = getResources().getDimensionPixelSize(
-    getResources().getIdentifier("status_bar_height", "dimen", "android"));
-    int navigationBarHeight = getResources().getDimensionPixelSize(
-    getResources().getIdentifier("navigation_bar_height", "dimen", "android"));
-     ViewGroup.LayoutParams layoutParams = binding.navigationView.getLayoutParams();
+    }
+
+    int statusBarHeight =
+        getResources()
+            .getDimensionPixelSize(
+                getResources().getIdentifier("status_bar_height", "dimen", "android"));
+    int navigationBarHeight =
+        getResources()
+            .getDimensionPixelSize(
+                getResources().getIdentifier("navigation_bar_height", "dimen", "android"));
+    ViewGroup.LayoutParams layoutParams = binding.navigationView.getLayoutParams();
     if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-    ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
-    marginLayoutParams.topMargin = statusBarHeight ; // Set top margin in pixels
-   // marginLayoutParams.bottomMargin = navigationBarHeight ; // Set bottom margin in pixels
-    binding.navigationView.setLayoutParams(marginLayoutParams);
-}
-    
-        
-   
-        binding.drawer.setScrimColor(Color.TRANSPARENT);
+      ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
+      marginLayoutParams.topMargin = statusBarHeight; // Set top margin in pixels
+      // marginLayoutParams.bottomMargin = navigationBarHeight ; // Set bottom margin in pixels
+      binding.navigationView.setLayoutParams(marginLayoutParams);
+    }
+
+    binding.drawer.setScrimColor(Color.TRANSPARENT);
     binding.drawer.setDrawerElevation(0f);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name) { 
-        @Override public void onDrawerSlide(View drawerView, float slideOffset) {
-             super.onDrawerSlide(drawerView, slideOffset);
-                 float slideX = drawerView.getWidth() * slideOffset; binding.coordinator.setTranslationX(slideX); 
-            }
-             }; 
-    binding.drawer.addDrawerListener(toggle);    
+    ActionBarDrawerToggle toggle =
+        new ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name) {
+          @Override
+          public void onDrawerSlide(View drawerView, float slideOffset) {
+            super.onDrawerSlide(drawerView, slideOffset);
+            float slideX = drawerView.getWidth() * slideOffset;
+            binding.coordinator.setTranslationX(slideX);
+          }
+        };
+    binding.drawer.addDrawerListener(toggle);
     binding.drawer.setFitsSystemWindows(false);
-    
-    binding.fileTreeView.initializeFileTree(
-        "/storage/emulated/0", fileoperate, fileIconProvider);
+
+    binding.fileTreeView.initializeFileTree("/storage/emulated/0", fileoperate, fileIconProvider);
 
     binding.contentGit.setVisibility(View.GONE);
     binding.contentToolbox.setVisibility(View.GONE);
@@ -152,22 +149,23 @@ public class MainActivity extends BaseActivity {
           return true;
         });
 
-    binding.hide.setOnClickListener(v -> {
-    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-      binding.drawer.closeDrawer(GravityCompat.START);
-    }
-    });
+    binding.hide.setOnClickListener(
+        v -> {
+          if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START);
+          }
+        });
     binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    
+
     binding.toolbar.setNavigationIcon(R.drawable.menu_24px);
-  //  var sheet = getSideSheet();
-    binding.toolbar.setNavigationOnClickListener(v -> /*sheet.show()*/{
-    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-        binding.drawer.closeDrawer(GravityCompat.START);
-      } else {
-        binding.drawer.openDrawer(GravityCompat.START);
-      }
-    
+    //  var sheet = getSideSheet();
+    binding.toolbar.setNavigationOnClickListener(
+        v -> /*sheet.show()*/ {
+          if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START);
+          } else {
+            binding.drawer.openDrawer(GravityCompat.START);
+          }
         });
 
     binding.options.setExpansion(true);
@@ -209,9 +207,6 @@ public class MainActivity extends BaseActivity {
           return WindowInsetsCompat.CONSUMED;
         });
   }
-    
-
-  
 
   private void compileJavaCode() {
     var compiler = new JavaCompiler(this);
@@ -287,13 +282,13 @@ public class MainActivity extends BaseActivity {
     super.onDestroy();
     this.binding = null;
   }
-   @Override
-	public void onBackPressed() {
-		if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-			binding.drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-		}
-	}
- 
+
+  @Override
+  public void onBackPressed() {
+    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+      binding.drawer.closeDrawer(GravityCompat.START);
+    } else {
+      super.onBackPressed();
+    }
+  }
 }

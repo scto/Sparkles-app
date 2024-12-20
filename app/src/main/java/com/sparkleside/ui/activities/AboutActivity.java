@@ -167,7 +167,7 @@ public class AboutActivity extends BaseActivity {
         Role.TRANSLATOR,
         "https://github.com/nexavo999",
         getString(R.string.nex_phrase),
-        false);      
+        false);
   }
 
   private void peekAndPop(String name, String imageUrl, String phrase, View v) {
