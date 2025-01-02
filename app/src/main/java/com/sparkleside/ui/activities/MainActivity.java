@@ -5,11 +5,15 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.widget.Toast;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
@@ -40,16 +44,27 @@ import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityMainBinding;
 //import com.sparkleside.databinding.ToolboxSidebinding;
+import com.sparkleside.preferences.Preferences;
 import com.sparkleside.ui.base.BaseActivity;
 import com.sparkleside.ui.components.ExpandableLayout;
 import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
 import com.sparkleside.ui.editor.schemes.SparklesScheme;
 import com.zyron.filetree.provider.FileTreeIconProvider;
+import io.github.rosemoe.sora.widget.EditorSearcher;
+import io.github.rosemoe.sora.widget.schemes.SchemeDarcula;
+import io.github.rosemoe.sora.widget.schemes.SchemeEclipse;
+import io.github.rosemoe.sora.widget.schemes.SchemeGitHub;
+import io.github.rosemoe.sora.widget.schemes.SchemeNotepadXX;
+import io.github.rosemoe.sora.widget.schemes.SchemeVS2019;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.robok.engine.feature.compiler.java.JavaCompiler;
 import org.robok.engine.feature.compiler.java.JavaCompiler.CompileItem;
+import com.google.android.material.transition.platform.MaterialContainerTransform;
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
+import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
 
 public class MainActivity extends BaseActivity {
 
@@ -57,18 +72,19 @@ public class MainActivity extends BaseActivity {
   private FileTreeIconProvider fileIconProvider;
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
-  //private ToolboxSidebinding binding;
+  private AtomicInteger currentIndex = new AtomicInteger(-1);
+    
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
     exitTransition.addTarget(R.id.coordinator);
     getWindow().setExitTransition(exitTransition);
-
     var reenterTransition = new MaterialSharedAxis(MaterialSharedAxis.X, false);
     reenterTransition.addTarget(R.id.coordinator);
     getWindow().setReenterTransition(reenterTransition);
-
+    setExitSharedElementCallback(new MaterialContainerTransformSharedElementCallback());
+    getWindow().setSharedElementsUseOverlay(false);
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
@@ -160,8 +176,7 @@ public class MainActivity extends BaseActivity {
     binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     
     binding.toolbar.setNavigationIcon(R.drawable.menu_24px);
-  //  var sheet = getSideSheet();
-    binding.toolbar.setNavigationOnClickListener(v -> /*sheet.show()*/{
+    binding.toolbar.setNavigationOnClickListener(v -> {
     if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
         binding.drawer.closeDrawer(GravityCompat.START);
       } else {
@@ -170,9 +185,12 @@ public class MainActivity extends BaseActivity {
     
         });
 
-    binding.options.setExpansion(true);
+    binding.options.setExpansion(Preferences.Editor.isShowToolbarEnabled(this));
     binding.options.setDuration(200);
     binding.options.setOrientatin(ExpandableLayout.VERTICAL);
+    binding.searchl.setExpansion(false);
+    binding.searchl.setDuration(200);
+    binding.searchl.setOrientatin(ExpandableLayout.VERTICAL);    
 
     if (Build.VERSION.SDK_INT >= 26) {
       binding.term.setTooltipText(getString(R.string.tooltip_terminal));
@@ -180,10 +198,19 @@ public class MainActivity extends BaseActivity {
       binding.file.setTooltipText(getString(R.string.tooltip_new_file));
       binding.settings.setTooltipText(getString(R.string.tooltip_settings));
     }
-
-    binding.fab.setOnClickListener(v -> compileJavaCode());
+    
+    EditorConfigs();
+    themeSora();
+    
+    binding.fab.setOnClickListener(v -> fabCompiler());
     binding.term.setOnClickListener(v -> startActivity(new Intent(this, TerminalActivity.class)));
-
+    binding.search.setOnClickListener(v->{
+        if (!binding.searchl.isExpanded()) {
+        binding.searchl.expand();
+      } else {
+        binding.searchl.collapse();
+      }
+        });
     binding.settings.setOnClickListener(
         v -> {
           Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
@@ -194,10 +221,7 @@ public class MainActivity extends BaseActivity {
     binding.editor.setTypefaceText(
         Typeface.createFromAsset(getAssets(), "fonts/jetbrainsmono.ttf"));
 
-    var currentNightMode =
-        getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-    var scheme = new SparklesScheme(binding.editor);
-    scheme.apply();
+    
 
     ViewCompat.setOnApplyWindowInsetsListener(
         binding.fab,
@@ -208,6 +232,20 @@ public class MainActivity extends BaseActivity {
           v.setLayoutParams(mlp);
           return WindowInsetsCompat.CONSUMED;
         });
+        ViewCompat.setOnApplyWindowInsetsListener(
+        binding.compilersCard,
+        (v, windowInsets) -> {
+          Insets insetss = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+          MarginLayoutParams mlp2 = (MarginLayoutParams) v.getLayoutParams();
+          mlp2.bottomMargin = insetss.bottom + 72;
+          v.setLayoutParams(mlp2);
+          return WindowInsetsCompat.CONSUMED;
+        });
+        
+    binding.materialbutton2.setOnClickListener( v -> { 
+        binding.editor.getSearcher().search(binding.edittext1.getText().toString(),new EditorSearcher.SearchOptions(false, true));
+        binding.editor.getSearcher().gotoNext();                                            
+    });
   }
     
 
@@ -295,5 +333,82 @@ public class MainActivity extends BaseActivity {
 			super.onBackPressed();
 		}
 	}
- 
+    
+    public void fabCompiler(){
+    MaterialContainerTransform transition = buildContainerTransform(true);
+    transition.setStartView(binding.fab);
+    transition.setEndView(binding.compilersCard);
+    transition.addTarget(binding.compilersCard);
+    // Trigger the container transform transition.
+    TransitionManager.beginDelayedTransition(binding.coordinator, transition);
+    binding.fab.setVisibility(View.INVISIBLE);
+    binding.compilersCard.setVisibility(View.VISIBLE);
+    //Listeners
+    binding.close.setOnClickListener(v->{
+    MaterialContainerTransform transition2 = buildContainerTransform(false);
+    transition2.setStartView(binding.compilersCard);
+    transition2.setEndView(binding.fab);
+    transition2.addTarget(binding.fab);    
+    TransitionManager.beginDelayedTransition(binding.coordinator, transition2);
+    binding.fab.setVisibility(View.VISIBLE);
+    binding.compilersCard.setVisibility(View.INVISIBLE);
+    });
+    binding.java.setOnClickListener(v-> compileJavaCode());
+    binding.markdown.setOnClickListener(v->
+        {
+            Intent intent = new Intent(MainActivity.this, MarkdownActivity.class);
+            intent.putExtra("mark",binding.editor.getText().toString());
+          android.app.ActivityOptions optionsCompat =
+          android.app.ActivityOptions.makeSceneTransitionAnimation(MainActivity.this , binding.markdown , "mark");
+          startActivity(intent, optionsCompat.toBundle());
+        });
+    binding.html.setOnClickListener(v->
+        {  
+          if(binding.editor.getText().toString() != ""){
+            Intent intent = new Intent(MainActivity.this, HtmlViewerActivity.class);
+            intent.putExtra("html", binding.editor.getText().toString());
+          android.app.ActivityOptions optionsCompat =
+          android.app.ActivityOptions.makeSceneTransitionAnimation(MainActivity.this , binding.html , "html");
+          startActivity(intent, optionsCompat.toBundle());
+          }
+        });    
+    } 
+    
+     private MaterialContainerTransform buildContainerTransform(boolean entering) {
+     MaterialContainerTransform transform = new MaterialContainerTransform(MainActivity.this, entering);
+     transform.setScrimColor(Color.TRANSPARENT);
+     transform.setDrawingViewId(binding.coordinator.getId());
+      return transform;
+     }
+     public void EditorConfigs(){
+         binding.editor.setWordwrap(Preferences.Editor.isWordWrapEnabled(this));
+         binding.editor.setLineNumberEnabled(Preferences.Editor.isShowLineEnable(this));
+         binding.editor.setFirstLineNumberAlwaysVisible(Preferences.Editor.isShowFirstLineEnable(this));
+     }
+     public void themeSora(){
+         switch(Preferences.Editor.getEditorThemeMode(this)){
+                case 0 -> {
+                var currentNightMode =
+                getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                var scheme = new SparklesScheme(binding.editor);
+                scheme.apply();
+               }
+               case 1 ->  binding.editor.setColorScheme(new SchemeDarcula());
+               case 2 ->  binding.editor.setColorScheme(new SchemeEclipse());
+               case 3 ->  binding.editor.setColorScheme(new SchemeGitHub());
+               case 4 ->  binding.editor.setColorScheme(new SchemeNotepadXX());
+               case 5 ->  binding.editor.setColorScheme(new SchemeVS2019());
+               default -> {
+               var currentNightMode =
+               getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+               var scheme = new SparklesScheme(binding.editor);
+               scheme.apply();
+               }
+           
+           }
+    }
+     
+
+    private int currentSearchIndex = 0;  
 }
+  

@@ -18,19 +18,19 @@ public class SettingsActivity extends BaseActivity {
     getWindow().setAllowEnterTransitionOverlap(false);
     MaterialSharedAxis enterTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
     enterTransition.addTarget(R.id.coordinator);
-    enterTransition.setDuration(200L);
+    enterTransition.setDuration(400L);
     getWindow().setEnterTransition(enterTransition);
     MaterialSharedAxis returnTransition = new MaterialSharedAxis(MaterialSharedAxis.X, false);
-    returnTransition.setDuration(200L);
+    returnTransition.setDuration(400L);
     returnTransition.addTarget(R.id.coordinator);
     getWindow().setReturnTransition(returnTransition);
 
-    MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
+   /* MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
     exitTransition.addTarget(R.id.coordinator);
     getWindow().setExitTransition(exitTransition);
     MaterialSharedAxis reenterTransition = new MaterialSharedAxis(MaterialSharedAxis.X, false);
     reenterTransition.addTarget(R.id.coordinator);
-    getWindow().setReenterTransition(reenterTransition);
+    getWindow().setReenterTransition(reenterTransition);*/
     super.onCreate(savedInstanceState);
 
     setContentView(binding.getRoot());
@@ -56,6 +56,13 @@ public class SettingsActivity extends BaseActivity {
               android.app.ActivityOptions.makeSceneTransitionAnimation(SettingsActivity.this);
           startActivity(intent, optionsCompat.toBundle());
         });
+    binding.editor.setOnClickListener(
+        v -> {
+          Intent intent = new Intent(SettingsActivity.this, CodeEditorSettingsActivity.class);
+          android.app.ActivityOptions optionsCompat =
+          android.app.ActivityOptions.makeSceneTransitionAnimation(SettingsActivity.this);
+          startActivity(intent, optionsCompat.toBundle());
+        });    
     binding.lib.setOnClickListener(
         v -> {
           LibsBuilder libe = new LibsBuilder();
