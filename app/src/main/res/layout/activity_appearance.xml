@@ -113,7 +113,7 @@
                          android:layout_height="wrap_content"
                          android:layout_width="wrap_content"
                          android:textSize="28dp"
-                         android:textColor="?colorSurface"
+                         android:textColor="?colorOnSurface"
                          android:layout_marginTop="14dp"
                          android:id="@+id/textview1"
                          android:text="System" />

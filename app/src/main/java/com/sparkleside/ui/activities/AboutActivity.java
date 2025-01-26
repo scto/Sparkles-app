@@ -85,12 +85,12 @@ public class AboutActivity extends BaseActivity {
   private void configureLinks() {
     binding.tg.setOnClickListener(
         v -> {
-          openURL("https://www.telegram.me/sparkleside");
+          openURL("https://www.telegram.me/sparkleseditor");
         });
 
     binding.github.setOnClickListener(
         v -> {
-          openURL("https://github.com/sparkleside/sparkles-app");
+          openURL("https://github.com/sparkleddevs/sparkleseditor");
         });
 
     binding.hanzo.setOnClickListener(
@@ -115,58 +115,88 @@ public class AboutActivity extends BaseActivity {
         Role.DEVELOPER,
         "https://github.com/itsvks19",
         getString(R.string.vivek_phrase),
-        true);
+        "0",
+        false);
     TeamMember(
         "Rohit Kushvaha",
         Role.DEVELOPER,
         "https://github.com/RohitKushvaha01",
         getString(R.string.rohit_kushvaha_phrase),
-        true);
+        "1",
+        false);
 
     TeamMember(
         "Thiarley Rocha",
         Role.DEVELOPER,
         "https://github.com/thdev-only",
         getString(R.string.thiarley_rocha_phrase),
-        true);
+        "1",
+        false);
 
     TeamMember(
         "NEOAPPS",
         Role.DEVELOPER,
         "https://github.com/neoapps-dev",
         getString(R.string.neoapps_phrase),
-        true);
+        "1",
+        false);
     TeamMember(
         "ArtSphere",
         Role.DEVELOPER,
         "https://github.com/ArtSphereOfficial",
         getString(R.string.art_phrase),
-        true);
+        "1",
+        false);
     TeamMember(
         "Hanzo",
         Role.DEVELOPER,
         "https://github.com/HanzoDev1375",
         getString(R.string.hanzo_phrase),
-        true);
+        "1",
+        false);
 
     TeamMember(
         "Jeiel Lima Miranda",
         Role.DEVELOPER,
         "https://github.com/jetrom17",
         getString(R.string.jaiel_lima_phrase),
-        true);
+        "1",
+        false);
+    TeamMember(
+        "Ömer SÜSİN",
+        Role.PROMOTER,
+        "https://github.com/omersusin",
+        getString(R.string.omer_phrase),
+        "1",
+        false);    
+    TeamMember(
+        "𝙊𝙋𝙏𝙄𝙈𝒊𝒛𝒆𝒓. 𝟚.𝟜.𝟛",
+        Role.PROMOTER,
+        "https://github.com/matrixguy007",
+        getString(R.string.optim_phrase),
+        "1",
+        false);  
+    TeamMember(
+        "ZG089",
+        Role.DESGINER,
+        "https://github.com/zg089",
+        getString(R.string.zg_phrase),
+        "1",
+        false);        
 
     TeamMember(
         "Alex",
         Role.TRANSLATOR,
         "https://github.com/paxsenix0",
         getString(R.string.alex_phrase),
-        true);
+        "1",
+        false);
     TeamMember(
         "Fahim Abdullah",
         Role.TRANSLATOR,
         "https://github.com/nexavo999",
         getString(R.string.nex_phrase),
+        "2",
         false);      
   }
 
@@ -184,13 +214,14 @@ public class AboutActivity extends BaseActivity {
     peekTextPhrase.setText(phrase);
   }
 
-  private void TeamMember(String name, Role role, String url, String phrase, boolean hasDivider) {
+  private void TeamMember(String name, Role role, String url, String phrase, String bg ,boolean hasDivider) {
     var c = new TeamMemberView(this);
     c.setName(name);
     c.setDescription(role.getName(this));
     c.setImageURL(url + ".png");
     c.setURL(url);
     c.setHasDivider(hasDivider);
+    c.setBackgroundPosition(bg);
     peekAndPop(name, url + ".png", phrase, c.getRoot());
     binding.team.addView(c);
   }
@@ -203,8 +234,9 @@ public class AboutActivity extends BaseActivity {
 
   public enum Role {
     TRANSLATOR(R.string.about_tag_translator),
-    DEVELOPER(R.string.about_tag_developer);
-
+    DEVELOPER(R.string.about_tag_developer),
+    PROMOTER(R.string.about_tag_promote),
+    DESGINER(R.string.about_tag_designer);    
     @StringRes private final int stringResId;
 
     Role(@StringRes int stringResId) {

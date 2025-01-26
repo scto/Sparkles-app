@@ -120,10 +120,11 @@
           android:text="@string/set_editor_desc" />
 
       </RelativeLayout>
-
+<!--Will be hidden until fully integrating the terminal-->
       <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:background="@drawable/drawable_settings_item_background"
         android:paddingVertical="16dp"
         android:paddingHorizontal="24dp"
