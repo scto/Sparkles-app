@@ -183,7 +183,7 @@
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:padding="8dp"
-              android:textSize="14sp"
+              android:textSize="12sp"
               android:textColor="?colorOnSurface"
               android:id="@+id/textview4"
               android:text="YamenHer" />
@@ -211,7 +211,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:padding="8dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="?colorOnSurface"
             android:id="@+id/textview5"
             android:text="SyntaxSpin"
@@ -248,7 +248,7 @@
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:padding="8dp"
-              android:textSize="14sp"
+              android:textSize="12sp"
               android:id="@+id/textview6"
               android:text="Aquiles"
               android:textColor="?colorOnSurface" />
@@ -262,28 +262,38 @@
       <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_margin="15dp"
-        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="2dp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="0dp"
+        android:fontFamily="@font/nunitob"
         android:textColor="?colorPrimary"
         android:text="@string/about_team" />
-
-      <com.google.android.material.card.MaterialCardView
+      <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp">
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/ic_wavy_line"/>
 
         <LinearLayout
           android:layout_height="match_parent"
           android:layout_width="match_parent"
           android:orientation="vertical"
-          style="?attr/materialCardViewFilledStyle"
+          android:layout_marginRight="8dp"
+          android:layout_marginLeft="8dp"
           android:id="@+id/team">
 
         </LinearLayout>
 
-      </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
