@@ -15,13 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: notify telegram
-        uses: EverythingSuckz/github-telegram-notify@main
-        continue-on-error: true
-        with:
-          bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          chat_id: -1002355760766
-          topic_id: 11
+#      - name: notify telegram
+#        uses: EverythingSuckz/github-telegram-notify@main
+#        continue-on-error: true
+#        with:
+#          bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#          chat_id: -1002355760766
+#          topic_id: 11
           
   build_release_apk:
     name: Build App Release APK
@@ -84,12 +84,12 @@ jobs:
           mv app-release.apk sparkles-app-release.apk
           ls 
 
-      - name: Send APK to Release Channel Telegram with Topic ID
-        if: success()
-        continue-on-error: true
-        run: |
-          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
-            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -F message_thread_id="11" \
-            -F document=@"sparkles-app-release.apk" \
-            -F caption="${{ github.event.head_commit.message }} by ${{ github.actor }}"
+#      - name: Send APK to Release Channel Telegram with Topic ID
+#        if: success()
+#        continue-on-error: true
+#        run: |
+#          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument" \
+#            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+#            -F message_thread_id="11" \
+#            -F document=@"sparkles-app-release.apk" \
+#            -F caption="${{ github.event.head_commit.message }} by ${{ github.actor }}"
