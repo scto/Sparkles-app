@@ -5,30 +5,21 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.widget.Toast;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.transition.TransitionManager;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
-import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.graphics.Insets;
@@ -37,13 +28,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.android.material.sidesheet.SideSheetBehavior;
 import com.google.android.material.sidesheet.SideSheetDialog;
+import com.google.android.material.transition.platform.MaterialContainerTransform;
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityMainBinding;
-//import com.sparkleside.databinding.ToolboxSidebinding;
+// import com.sparkleside.databinding.ToolboxSidebinding;
 import com.sparkleside.preferences.Preferences;
 import com.sparkleside.ui.base.BaseActivity;
 import com.sparkleside.ui.components.ExpandableLayout;
@@ -62,9 +53,6 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.robok.engine.feature.compiler.java.JavaCompiler;
 import org.robok.engine.feature.compiler.java.JavaCompiler.CompileItem;
-import com.google.android.material.transition.platform.MaterialContainerTransform;
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
-import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
 
 public class MainActivity extends BaseActivity {
 
@@ -73,7 +61,6 @@ public class MainActivity extends BaseActivity {
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
   private AtomicInteger currentIndex = new AtomicInteger(-1);
-    
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -89,59 +76,62 @@ public class MainActivity extends BaseActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
     setSupportActionBar(binding.toolbar);
-    
+
     /*Permission Controller by Rakhmonov Bobur*/
-     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { 
-     if (!Environment.isExternalStorageManager()) { 
-     MaterialAlertDialogBuilder perm = new MaterialAlertDialogBuilder(this);
-     LayoutInflater permview= getLayoutInflater();
-     View perview = (View) permview.inflate(R.layout.dialogpermission, null);
-     perm.setView(perview);
-     final TextView positive = (TextView)
-     perview.findViewById(android.R.id.button1);
-     final TextView negative = (TextView)
-     perview.findViewById(android.R.id.button3);
-     positive.setOnClickListener(v -> {
-     Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-   intent.setData(Uri.parse("package:" + getPackageName()));
-   startActivity(intent);
-     });
-     negative.setOnClickListener(v ->{ finishAffinity();});
-     perm.setCancelable(false);
-     perm.create().show();           
-     
-     
-  
-     } 
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      if (!Environment.isExternalStorageManager()) {
+        MaterialAlertDialogBuilder perm = new MaterialAlertDialogBuilder(this);
+        LayoutInflater permview = getLayoutInflater();
+        View perview = (View) permview.inflate(R.layout.dialogpermission, null);
+        perm.setView(perview);
+        final TextView positive = (TextView) perview.findViewById(android.R.id.button1);
+        final TextView negative = (TextView) perview.findViewById(android.R.id.button3);
+        positive.setOnClickListener(
+            v -> {
+              Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+              intent.setData(Uri.parse("package:" + getPackageName()));
+              startActivity(intent);
+            });
+        negative.setOnClickListener(
+            v -> {
+              finishAffinity();
+            });
+        perm.setCancelable(false);
+        perm.create().show();
       }
-    
-    int statusBarHeight = getResources().getDimensionPixelSize(
-    getResources().getIdentifier("status_bar_height", "dimen", "android"));
-    int navigationBarHeight = getResources().getDimensionPixelSize(
-    getResources().getIdentifier("navigation_bar_height", "dimen", "android"));
-     ViewGroup.LayoutParams layoutParams = binding.navigationView.getLayoutParams();
+    }
+
+    int statusBarHeight =
+        getResources()
+            .getDimensionPixelSize(
+                getResources().getIdentifier("status_bar_height", "dimen", "android"));
+    int navigationBarHeight =
+        getResources()
+            .getDimensionPixelSize(
+                getResources().getIdentifier("navigation_bar_height", "dimen", "android"));
+    ViewGroup.LayoutParams layoutParams = binding.navigationView.getLayoutParams();
     if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-    ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
-    marginLayoutParams.topMargin = statusBarHeight ; // Set top margin in pixels
-   // marginLayoutParams.bottomMargin = navigationBarHeight ; // Set bottom margin in pixels
-    binding.navigationView.setLayoutParams(marginLayoutParams);
-}
-    
-        
-   
-        binding.drawer.setScrimColor(Color.TRANSPARENT);
+      ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
+      marginLayoutParams.topMargin = statusBarHeight; // Set top margin in pixels
+      // marginLayoutParams.bottomMargin = navigationBarHeight ; // Set bottom margin in pixels
+      binding.navigationView.setLayoutParams(marginLayoutParams);
+    }
+
+    binding.drawer.setScrimColor(Color.TRANSPARENT);
     binding.drawer.setDrawerElevation(0f);
-    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name) { 
-        @Override public void onDrawerSlide(View drawerView, float slideOffset) {
-             super.onDrawerSlide(drawerView, slideOffset);
-                 float slideX = drawerView.getWidth() * slideOffset; binding.coordinator.setTranslationX(slideX); 
-            }
-             }; 
-    binding.drawer.addDrawerListener(toggle);    
+    ActionBarDrawerToggle toggle =
+        new ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name) {
+          @Override
+          public void onDrawerSlide(View drawerView, float slideOffset) {
+            super.onDrawerSlide(drawerView, slideOffset);
+            float slideX = drawerView.getWidth() * slideOffset;
+            binding.coordinator.setTranslationX(slideX);
+          }
+        };
+    binding.drawer.addDrawerListener(toggle);
     binding.drawer.setFitsSystemWindows(false);
-    
-    binding.fileTreeView.initializeFileTree(
-        "/storage/emulated/0", fileoperate, fileIconProvider);
+
+    binding.fileTreeView.initializeFileTree("/storage/emulated/0", fileoperate, fileIconProvider);
 
     binding.contentGit.setVisibility(View.GONE);
     binding.contentToolbox.setVisibility(View.GONE);
@@ -168,21 +158,22 @@ public class MainActivity extends BaseActivity {
           return true;
         });
 
-    binding.hide.setOnClickListener(v -> {
-    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-      binding.drawer.closeDrawer(GravityCompat.START);
-    }
-    });
+    binding.hide.setOnClickListener(
+        v -> {
+          if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START);
+          }
+        });
     binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    
+
     binding.toolbar.setNavigationIcon(R.drawable.menu_24px);
-    binding.toolbar.setNavigationOnClickListener(v -> {
-    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-        binding.drawer.closeDrawer(GravityCompat.START);
-      } else {
-        binding.drawer.openDrawer(GravityCompat.START);
-      }
-    
+    binding.toolbar.setNavigationOnClickListener(
+        v -> {
+          if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+            binding.drawer.closeDrawer(GravityCompat.START);
+          } else {
+            binding.drawer.openDrawer(GravityCompat.START);
+          }
         });
 
     binding.options.setExpansion(Preferences.Editor.isShowToolbarEnabled(this));
@@ -190,7 +181,7 @@ public class MainActivity extends BaseActivity {
     binding.options.setOrientatin(ExpandableLayout.VERTICAL);
     binding.searchl.setExpansion(false);
     binding.searchl.setDuration(200);
-    binding.searchl.setOrientatin(ExpandableLayout.VERTICAL);    
+    binding.searchl.setOrientatin(ExpandableLayout.VERTICAL);
 
     if (Build.VERSION.SDK_INT >= 26) {
       binding.term.setTooltipText(getString(R.string.tooltip_terminal));
@@ -198,18 +189,19 @@ public class MainActivity extends BaseActivity {
       binding.file.setTooltipText(getString(R.string.tooltip_new_file));
       binding.settings.setTooltipText(getString(R.string.tooltip_settings));
     }
-    
+
     EditorConfigs();
     themeSora();
-    
+
     binding.fab.setOnClickListener(v -> fabCompiler());
     binding.term.setOnClickListener(v -> startActivity(new Intent(this, TerminalActivity.class)));
-    binding.search.setOnClickListener(v->{
-        if (!binding.searchl.isExpanded()) {
-        binding.searchl.expand();
-      } else {
-        binding.searchl.collapse();
-      }
+    binding.search.setOnClickListener(
+        v -> {
+          if (!binding.searchl.isExpanded()) {
+            binding.searchl.expand();
+          } else {
+            binding.searchl.collapse();
+          }
         });
     binding.settings.setOnClickListener(
         v -> {
@@ -221,8 +213,6 @@ public class MainActivity extends BaseActivity {
     binding.editor.setTypefaceText(
         Typeface.createFromAsset(getAssets(), "fonts/jetbrainsmono.ttf"));
 
-    
-
     ViewCompat.setOnApplyWindowInsetsListener(
         binding.fab,
         (v, windowInsets) -> {
@@ -232,7 +222,7 @@ public class MainActivity extends BaseActivity {
           v.setLayoutParams(mlp);
           return WindowInsetsCompat.CONSUMED;
         });
-        ViewCompat.setOnApplyWindowInsetsListener(
+    ViewCompat.setOnApplyWindowInsetsListener(
         binding.compilersCard,
         (v, windowInsets) -> {
           Insets insetss = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -241,15 +231,18 @@ public class MainActivity extends BaseActivity {
           v.setLayoutParams(mlp2);
           return WindowInsetsCompat.CONSUMED;
         });
-        
-    binding.materialbutton2.setOnClickListener( v -> { 
-        binding.editor.getSearcher().search(binding.edittext1.getText().toString(),new EditorSearcher.SearchOptions(false, true));
-        binding.editor.getSearcher().gotoNext();                                            
-    });
-  }
-    
 
-  
+    binding.materialbutton2.setOnClickListener(
+        v -> {
+          binding
+              .editor
+              .getSearcher()
+              .search(
+                  binding.edittext1.getText().toString(),
+                  new EditorSearcher.SearchOptions(false, true));
+          binding.editor.getSearcher().gotoNext();
+        });
+  }
 
   private void compileJavaCode() {
     var compiler = new JavaCompiler(this);
@@ -325,16 +318,17 @@ public class MainActivity extends BaseActivity {
     super.onDestroy();
     this.binding = null;
   }
-   @Override
-	public void onBackPressed() {
-		if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
-			binding.drawer.closeDrawer(GravityCompat.START);
-		} else {
-			super.onBackPressed();
-		}
-	}
-    
-    public void fabCompiler(){
+
+  @Override
+  public void onBackPressed() {
+    if (binding.drawer.isDrawerOpen(GravityCompat.START)) {
+      binding.drawer.closeDrawer(GravityCompat.START);
+    } else {
+      super.onBackPressed();
+    }
+  }
+
+  public void fabCompiler() {
     MaterialContainerTransform transition = buildContainerTransform(true);
     transition.setStartView(binding.fab);
     transition.setEndView(binding.compilersCard);
@@ -343,72 +337,75 @@ public class MainActivity extends BaseActivity {
     TransitionManager.beginDelayedTransition(binding.coordinator, transition);
     binding.fab.setVisibility(View.INVISIBLE);
     binding.compilersCard.setVisibility(View.VISIBLE);
-    //Listeners
-    binding.close.setOnClickListener(v->{
-    MaterialContainerTransform transition2 = buildContainerTransform(false);
-    transition2.setStartView(binding.compilersCard);
-    transition2.setEndView(binding.fab);
-    transition2.addTarget(binding.fab);    
-    TransitionManager.beginDelayedTransition(binding.coordinator, transition2);
-    binding.fab.setVisibility(View.VISIBLE);
-    binding.compilersCard.setVisibility(View.INVISIBLE);
-    });
-    binding.java.setOnClickListener(v-> compileJavaCode());
-    binding.markdown.setOnClickListener(v->
-        {
-            Intent intent = new Intent(MainActivity.this, MarkdownActivity.class);
-            intent.putExtra("mark",binding.editor.getText().toString());
+    // Listeners
+    binding.close.setOnClickListener(
+        v -> {
+          MaterialContainerTransform transition2 = buildContainerTransform(false);
+          transition2.setStartView(binding.compilersCard);
+          transition2.setEndView(binding.fab);
+          transition2.addTarget(binding.fab);
+          TransitionManager.beginDelayedTransition(binding.coordinator, transition2);
+          binding.fab.setVisibility(View.VISIBLE);
+          binding.compilersCard.setVisibility(View.INVISIBLE);
+        });
+    binding.java.setOnClickListener(v -> compileJavaCode());
+    binding.markdown.setOnClickListener(
+        v -> {
+          Intent intent = new Intent(MainActivity.this, MarkdownActivity.class);
+          intent.putExtra("mark", binding.editor.getText().toString());
           android.app.ActivityOptions optionsCompat =
-          android.app.ActivityOptions.makeSceneTransitionAnimation(MainActivity.this , binding.markdown , "mark");
+              android.app.ActivityOptions.makeSceneTransitionAnimation(
+                  MainActivity.this, binding.markdown, "mark");
           startActivity(intent, optionsCompat.toBundle());
         });
-    binding.html.setOnClickListener(v->
-        {  
-          if(binding.editor.getText().toString() != ""){
+    binding.html.setOnClickListener(
+        v -> {
+          if (binding.editor.getText().toString() != "") {
             Intent intent = new Intent(MainActivity.this, HtmlViewerActivity.class);
             intent.putExtra("html", binding.editor.getText().toString());
-          android.app.ActivityOptions optionsCompat =
-          android.app.ActivityOptions.makeSceneTransitionAnimation(MainActivity.this , binding.html , "html");
-          startActivity(intent, optionsCompat.toBundle());
+            android.app.ActivityOptions optionsCompat =
+                android.app.ActivityOptions.makeSceneTransitionAnimation(
+                    MainActivity.this, binding.html, "html");
+            startActivity(intent, optionsCompat.toBundle());
           }
-        });    
-    } 
-    
-     private MaterialContainerTransform buildContainerTransform(boolean entering) {
-     MaterialContainerTransform transform = new MaterialContainerTransform(MainActivity.this, entering);
-     transform.setScrimColor(Color.TRANSPARENT);
-     transform.setDrawingViewId(binding.coordinator.getId());
-      return transform;
-     }
-     public void EditorConfigs(){
-         binding.editor.setWordwrap(Preferences.Editor.isWordWrapEnabled(this));
-         binding.editor.setLineNumberEnabled(Preferences.Editor.isShowLineEnable(this));
-         binding.editor.setFirstLineNumberAlwaysVisible(Preferences.Editor.isShowFirstLineEnable(this));
-     }
-     public void themeSora(){
-         switch(Preferences.Editor.getEditorThemeMode(this)){
-                case 0 -> {
-                var currentNightMode =
-                getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                var scheme = new SparklesScheme(binding.editor);
-                scheme.apply();
-               }
-               case 1 ->  binding.editor.setColorScheme(new SchemeDarcula());
-               case 2 ->  binding.editor.setColorScheme(new SchemeEclipse());
-               case 3 ->  binding.editor.setColorScheme(new SchemeGitHub());
-               case 4 ->  binding.editor.setColorScheme(new SchemeNotepadXX());
-               case 5 ->  binding.editor.setColorScheme(new SchemeVS2019());
-               default -> {
-               var currentNightMode =
-               getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-               var scheme = new SparklesScheme(binding.editor);
-               scheme.apply();
-               }
-           
-           }
-    }
-     
+        });
+  }
 
-    private int currentSearchIndex = 0;  
+  private MaterialContainerTransform buildContainerTransform(boolean entering) {
+    MaterialContainerTransform transform =
+        new MaterialContainerTransform(MainActivity.this, entering);
+    transform.setScrimColor(Color.TRANSPARENT);
+    transform.setDrawingViewId(binding.coordinator.getId());
+    return transform;
+  }
+
+  public void EditorConfigs() {
+    binding.editor.setWordwrap(Preferences.Editor.isWordWrapEnabled(this));
+    binding.editor.setLineNumberEnabled(Preferences.Editor.isShowLineEnable(this));
+    binding.editor.setFirstLineNumberAlwaysVisible(Preferences.Editor.isShowFirstLineEnable(this));
+  }
+
+  public void themeSora() {
+    switch (Preferences.Editor.getEditorThemeMode(this)) {
+      case 0 -> {
+        var currentNightMode =
+            getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        var scheme = new SparklesScheme(binding.editor);
+        scheme.apply();
+      }
+      case 1 -> binding.editor.setColorScheme(new SchemeDarcula());
+      case 2 -> binding.editor.setColorScheme(new SchemeEclipse());
+      case 3 -> binding.editor.setColorScheme(new SchemeGitHub());
+      case 4 -> binding.editor.setColorScheme(new SchemeNotepadXX());
+      case 5 -> binding.editor.setColorScheme(new SchemeVS2019());
+      default -> {
+        var currentNightMode =
+            getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        var scheme = new SparklesScheme(binding.editor);
+        scheme.apply();
+      }
+    }
+  }
+
+  private int currentSearchIndex = 0;
 }
-  

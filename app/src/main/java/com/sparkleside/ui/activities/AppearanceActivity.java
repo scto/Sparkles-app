@@ -1,21 +1,20 @@
 package com.sparkleside.ui.activities;
 
-import android.os.Bundle;
 import android.content.Intent;
-import android.widget.Toast;
+import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDelegate;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityAppearanceBinding;
 import com.sparkleside.preferences.Preferences;
 import com.sparkleside.ui.base.BaseActivity;
-import com.google.android.material.snackbar.Snackbar;
 import dev.trindadedev.ui_utils.preferences.withicon.PreferenceSwitch;
 
-/* 
-* Appearance Activity of Sparkles Licensed by GPL-v3.0
-* @author Syntaxspin (SyntaxSpins)
-*/
+/*
+ * Appearance Activity of Sparkles Licensed by GPL-v3.0
+ * @author Syntaxspin (SyntaxSpins)
+ */
 
 public class AppearanceActivity extends BaseActivity {
 
@@ -67,7 +66,6 @@ public class AppearanceActivity extends BaseActivity {
 
     binding.linear1.addView(getMonetPreference());
     binding.linear1.addView(getAmoledPreference());
-
   }
 
   private PreferenceSwitch getMonetPreference() {
@@ -84,6 +82,7 @@ public class AppearanceActivity extends BaseActivity {
         });
     return pref;
   }
+
   private PreferenceSwitch getAmoledPreference() {
     PreferenceSwitch pref = new PreferenceSwitch(this);
     pref.setIcon(R.drawable.ic_pallete);
@@ -97,16 +96,21 @@ public class AppearanceActivity extends BaseActivity {
           askForRestart();
         });
     return pref;
-  }  
-    
-    
-    
+  }
+
   private void askForRestart() {
-        Snackbar.make(binding.linear1, "To Apply Changes Restart the app", com.google.android.material.snackbar.Snackbar.LENGTH_SHORT).setAction("Restart", v-> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            System.exit(0);
-        }).show();
-  }  
+    Snackbar.make(
+            binding.linear1,
+            "To Apply Changes Restart the app",
+            com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
+        .setAction(
+            "Restart",
+            v -> {
+              Intent intent = new Intent(this, MainActivity.class);
+              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+              startActivity(intent);
+              System.exit(0);
+            })
+        .show();
+  }
 }

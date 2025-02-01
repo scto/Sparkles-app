@@ -19,16 +19,14 @@ package org.robok.engine.feature.compiler.java;
 
 import android.content.Context;
 import com.android.tools.r8.D8;
-import com.android.tools.r8.D8Command;
 import dalvik.system.DexClassLoader;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.jdt.internal.compiler.batch.Main;
@@ -126,30 +124,31 @@ public final class JavaCompiler {
     } catch (Exception e) {
       newLog(e.toString());
     }
-  }  
+  }
+
   /*
    * Run the compiled code with R8 & DexClassLoader
    * @param outputDir The path where classes.jar is located
    */
-  public final void run(final File outputDir) { 
+  public final void run(final File outputDir) {
     try {
       var resultStr = new StringBuilder();
       var outputStream =
-        new OutputStream() {
-          @Override
-          public void write(int v) {
-            resultStr.append(String.valueOf((char) v));
-          }
-          
-          @Override
-          public String toString() {
-            return resultStr.toString();
-          }
-        };
-        
+          new OutputStream() {
+            @Override
+            public void write(int v) {
+              resultStr.append(String.valueOf((char) v));
+            }
+
+            @Override
+            public String toString() {
+              return resultStr.toString();
+            }
+          };
+
       System.setOut(new PrintStream(outputStream));
       System.setErr(new PrintStream(outputStream));
-      
+
       var className = "Main";
       var optimizedDir = context.getDir("odex", Context.MODE_PRIVATE).getAbsolutePath();
 

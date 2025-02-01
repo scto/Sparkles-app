@@ -122,23 +122,21 @@ public class PreferenceSwitch extends RelativeLayout implements View.OnClickList
       CompoundButton.OnCheckedChangeListener onCheckedChangeListener) {
     preferenceSwitch.setOnCheckedChangeListener(onCheckedChangeListener);
   }
-  public void setBackgroundPosition(String item){
-      int backgroundResource;
-      if (item == "1") {
-            backgroundResource = R.drawable.shape_alone;
-        } else if (item == "0") {
-            backgroundResource = R.drawable.shape_top;
-        } else if (item == "3" ) {
-            backgroundResource = R.drawable.shape_bottom;
-        } else if (item == "2") {
-            backgroundResource = R.drawable.shape_middle;
-        }
-        else{
-            backgroundResource = Color.TRANSPARENT;
-        }
 
-        root.setBackgroundResource(backgroundResource);
+  public void setBackgroundPosition(String item) {
+    int backgroundResource;
+    if (item == "1") {
+      backgroundResource = R.drawable.shape_alone;
+    } else if (item == "0") {
+      backgroundResource = R.drawable.shape_top;
+    } else if (item == "3") {
+      backgroundResource = R.drawable.shape_bottom;
+    } else if (item == "2") {
+      backgroundResource = R.drawable.shape_middle;
+    } else {
+      backgroundResource = Color.TRANSPARENT;
     }
-    
-  
+
+    root.setBackgroundResource(backgroundResource);
+  }
 }

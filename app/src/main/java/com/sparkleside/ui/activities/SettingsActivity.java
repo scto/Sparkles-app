@@ -25,7 +25,7 @@ public class SettingsActivity extends BaseActivity {
     returnTransition.addTarget(R.id.coordinator);
     getWindow().setReturnTransition(returnTransition);
 
-   /* MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
+    /* MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
     exitTransition.addTarget(R.id.coordinator);
     getWindow().setExitTransition(exitTransition);
     MaterialSharedAxis reenterTransition = new MaterialSharedAxis(MaterialSharedAxis.X, false);
@@ -60,9 +60,9 @@ public class SettingsActivity extends BaseActivity {
         v -> {
           Intent intent = new Intent(SettingsActivity.this, CodeEditorSettingsActivity.class);
           android.app.ActivityOptions optionsCompat =
-          android.app.ActivityOptions.makeSceneTransitionAnimation(SettingsActivity.this);
+              android.app.ActivityOptions.makeSceneTransitionAnimation(SettingsActivity.this);
           startActivity(intent, optionsCompat.toBundle());
-        });    
+        });
     binding.lib.setOnClickListener(
         v -> {
           LibsBuilder libe = new LibsBuilder();

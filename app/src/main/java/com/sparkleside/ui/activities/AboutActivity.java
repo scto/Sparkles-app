@@ -168,21 +168,21 @@ public class AboutActivity extends BaseActivity {
         "https://github.com/omersusin",
         getString(R.string.omer_phrase),
         "1",
-        false);    
+        false);
     TeamMember(
         "𝙊𝙋𝙏𝙄𝙈𝒊𝒛𝒆𝒓. 𝟚.𝟜.𝟛",
         Role.PROMOTER,
         "https://github.com/matrixguy007",
         getString(R.string.optim_phrase),
         "1",
-        false);  
+        false);
     TeamMember(
         "ZG089",
         Role.DESGINER,
         "https://github.com/zg089",
         getString(R.string.zg_phrase),
         "1",
-        false);        
+        false);
 
     TeamMember(
         "Alex",
@@ -197,7 +197,7 @@ public class AboutActivity extends BaseActivity {
         "https://github.com/nexavo999",
         getString(R.string.nex_phrase),
         "2",
-        false);      
+        false);
   }
 
   private void peekAndPop(String name, String imageUrl, String phrase, View v) {
@@ -214,7 +214,8 @@ public class AboutActivity extends BaseActivity {
     peekTextPhrase.setText(phrase);
   }
 
-  private void TeamMember(String name, Role role, String url, String phrase, String bg ,boolean hasDivider) {
+  private void TeamMember(
+      String name, Role role, String url, String phrase, String bg, boolean hasDivider) {
     var c = new TeamMemberView(this);
     c.setName(name);
     c.setDescription(role.getName(this));
@@ -236,7 +237,7 @@ public class AboutActivity extends BaseActivity {
     TRANSLATOR(R.string.about_tag_translator),
     DEVELOPER(R.string.about_tag_developer),
     PROMOTER(R.string.about_tag_promote),
-    DESGINER(R.string.about_tag_designer);    
+    DESGINER(R.string.about_tag_designer);
     @StringRes private final int stringResId;
 
     Role(@StringRes int stringResId) {

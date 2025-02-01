@@ -73,23 +73,23 @@ public class TeamMemberView extends RelativeLayout {
   public String getURL() {
     return url;
   }
-  public void setBackgroundPosition(String str){
-      int backgroundResource;
-      if (str == "3") {
-            backgroundResource = R.drawable.shape_alone;
-        } else if (str == "0") {
-            backgroundResource = R.drawable.shape_top;
-        } else if (str == "2" ) {
-            backgroundResource = R.drawable.shape_bottom;
-        } else if (str == "1") {
-            backgroundResource = R.drawable.shape_middle;
-        }
-        else{
-            backgroundResource = Color.TRANSPARENT;
-        }
 
-        binding.bg.setBackgroundResource(backgroundResource);
-  }  
+  public void setBackgroundPosition(String str) {
+    int backgroundResource;
+    if (str == "3") {
+      backgroundResource = R.drawable.shape_alone;
+    } else if (str == "0") {
+      backgroundResource = R.drawable.shape_top;
+    } else if (str == "2") {
+      backgroundResource = R.drawable.shape_bottom;
+    } else if (str == "1") {
+      backgroundResource = R.drawable.shape_middle;
+    } else {
+      backgroundResource = Color.TRANSPARENT;
+    }
+
+    binding.bg.setBackgroundResource(backgroundResource);
+  }
 
   public void setHasDivider(boolean hasDivider) {
     this.hasDivider = hasDivider;
