@@ -20,24 +20,22 @@ jobs:
           
       - name: Download ktfmt
         run: |
-          wget https://github.com/maybetrindadedev/ktfmt/releases/download/1.0.0/ktfmt-0.54-SNAPSHOT-jar-with-dependencies.jar -O ktfmt.jar
+          wget https://github.com/facebook/ktfmt/releases/download/v0.52/ktfmt-0.52-jar-with-dependencies.jar -O ktfmt.jar
 
       - name: Run ktfmt on Kotlin files
         run: |
-          find . -name "*.kt" -exec java -jar ktfmt.jar --google-style {} +
+          find . -name "*.kt" -exec java -jar ktfmt.jar --kotlinlang-style {} +
 
-      - name: Commit and Push changes
+      - name: Commit and Push changes to branch master
         run: |
-          rm ktfmt.jar
-          git config --global user.name "trindadedev13"
-          git config --global user.email "trindadedev13@gmail.com"
-          git fetch origin ${GITHUB_REF_NAME}:temp
+          git config --global user.name "scto"
+          git config --global user.email "tschmid35@gmail.com"
           git add .
-          git commit -m "chore: Format Kotlin Code" -m "format code with ktfmt in github actions"
-          git rebase temp
-          git push origin HEAD:${GITHUB_REF_NAME}
+          git commit -m "chore: Format Code on branch master" -m "fornat code with ktfmt with github actions"
+          git branch -M main
+          git push origin main
         env:
-          TOKEN: ${{ secrets.SUPER_TOKEN }}
+          TOKEN: ${{ github.token }} # ${{ secrets.SUPER_TOKEN }}
         continue-on-error: true
   
   format-java:
