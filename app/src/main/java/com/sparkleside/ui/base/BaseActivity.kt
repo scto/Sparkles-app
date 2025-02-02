@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity : AppCompatActivity() {
 
-  override fun onCreate(saved: Bundle?) {
-    super.onCreate(saved)
-    enableEdgeToEdge()
-  }
+    override fun onCreate(saved: Bundle?) {
+        super.onCreate(saved)
+        enableEdgeToEdge()
+    }
 }

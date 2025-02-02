@@ -22,79 +22,79 @@ import java.io.File
  */
 class DefaultFileIconProvider : FileTreeIconProvider {
 
-  /**
-   * Returns the resource ID for the chevron icon used in the file tree.
-   *
-   * @return Resource ID for the chevron icon.
-   */
-  override fun getChevronIcon(): Int {
-    return R.drawable.ic_chevron
-  }
-
-  /**
-   * Returns the resource ID for the default folder icon.
-   *
-   * @return Resource ID for the default folder icon.
-   */
-  override fun getDefaultFolderIcon(): Int {
-    return R.drawable.ic_folder
-  }
-
-  /**
-   * Returns the resource ID for the default file icon.
-   *
-   * @return Resource ID for the default file icon.
-   */
-  override fun getDefaultFileIcon(): Int {
-    return R.drawable.ic_file
-  }
-
-  /**
-   * Returns the resource ID for the folder icon based on the folder name.
-   *
-   * @param folder The folder whose icon is to be determined.
-   * @return Resource ID for the folder icon.
-   */
-  override fun getIconForFolder(folder: File): Int {
-    return when (folder.name) {
-      "app" -> R.drawable.ic_folder
-      "src" -> R.drawable.ic_folder
-      "kotlin" -> R.drawable.ic_folder
-      "java" -> R.drawable.ic_folder
-      "res" -> R.drawable.ic_folder
-      else -> getDefaultFolderIcon()
+    /**
+     * Returns the resource ID for the chevron icon used in the file tree.
+     *
+     * @return Resource ID for the chevron icon.
+     */
+    override fun getChevronIcon(): Int {
+        return R.drawable.ic_chevron
     }
-  }
 
-  /**
-   * Returns the resource ID for the file icon based on the file name.
-   *
-   * @param file The file whose icon is to be determined.
-   * @return Resource ID for the file icon.
-   */
-  override fun getIconForFile(file: File): Int {
-    return when (file.name) {
-      "gradlew.bat" -> R.drawable.ic_file
-      "gradlew" -> R.drawable.ic_file
-      "settings.gradle" -> R.drawable.ic_file
-      "build.gradle" -> R.drawable.ic_file
-      "gradle.properties" -> R.drawable.ic_file
-      else -> getIconForExtension(file.extension)
+    /**
+     * Returns the resource ID for the default folder icon.
+     *
+     * @return Resource ID for the default folder icon.
+     */
+    override fun getDefaultFolderIcon(): Int {
+        return R.drawable.ic_folder
     }
-  }
 
-  /**
-   * Returns the resource ID for the file icon based on the file extension.
-   *
-   * @param extension The extension of the file whose icon is to be determined.
-   * @return Resource ID for the file icon.
-   */
-  override fun getIconForExtension(extension: String): Int {
-    return when (extension) {
-      "xml" -> R.drawable.ic_file
-      "java" -> R.drawable.ic_file
-      "kt" -> R.drawable.ic_file
-      else -> getDefaultFileIcon()
+    /**
+     * Returns the resource ID for the default file icon.
+     *
+     * @return Resource ID for the default file icon.
+     */
+    override fun getDefaultFileIcon(): Int {
+        return R.drawable.ic_file
     }
-  }
+
+    /**
+     * Returns the resource ID for the folder icon based on the folder name.
+     *
+     * @param folder The folder whose icon is to be determined.
+     * @return Resource ID for the folder icon.
+     */
+    override fun getIconForFolder(folder: File): Int {
+        return when (folder.name) {
+            "app" -> R.drawable.ic_folder
+            "src" -> R.drawable.ic_folder
+            "kotlin" -> R.drawable.ic_folder
+            "java" -> R.drawable.ic_folder
+            "res" -> R.drawable.ic_folder
+            else -> getDefaultFolderIcon()
+        }
+    }
+
+    /**
+     * Returns the resource ID for the file icon based on the file name.
+     *
+     * @param file The file whose icon is to be determined.
+     * @return Resource ID for the file icon.
+     */
+    override fun getIconForFile(file: File): Int {
+        return when (file.name) {
+            "gradlew.bat" -> R.drawable.ic_file
+            "gradlew" -> R.drawable.ic_file
+            "settings.gradle" -> R.drawable.ic_file
+            "build.gradle" -> R.drawable.ic_file
+            "gradle.properties" -> R.drawable.ic_file
+            else -> getIconForExtension(file.extension)
+        }
+    }
+
+    /**
+     * Returns the resource ID for the file icon based on the file extension.
+     *
+     * @param extension The extension of the file whose icon is to be determined.
+     * @return Resource ID for the file icon.
+     */
+    override fun getIconForExtension(extension: String): Int {
+        return when (extension) {
+            "xml" -> R.drawable.ic_file
+            "java" -> R.drawable.ic_file
+            "kt" -> R.drawable.ic_file
+            else -> getDefaultFileIcon()
+        }
+    }
 }

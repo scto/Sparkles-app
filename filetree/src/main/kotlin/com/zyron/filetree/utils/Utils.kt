@@ -18,14 +18,14 @@ import android.os.Looper
 
 /** Utility object providing helper methods for running tasks on the main thread. */
 object Utils {
-  private val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
-  /**
-   * Posts a Runnable to be executed on the main (UI) thread.
-   *
-   * @param runnable The Runnable to be executed on the UI thread.
-   */
-  fun runOnUiThread(runnable: Runnable) {
-    handler.post(runnable)
-  }
+    /**
+     * Posts a Runnable to be executed on the main (UI) thread.
+     *
+     * @param runnable The Runnable to be executed on the UI thread.
+     */
+    fun runOnUiThread(runnable: Runnable) {
+        handler.post(runnable)
+    }
 }

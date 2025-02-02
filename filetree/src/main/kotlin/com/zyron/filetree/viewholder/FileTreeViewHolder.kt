@@ -13,12 +13,12 @@
  */
 package com.zyron.filetree.viewholder
 
+// import com.google.android.material.imageview.ShapeableImageView
+// import com.google.android.material.textview.MaterialTextView
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-//import com.google.android.material.imageview.ShapeableImageView
-//import com.google.android.material.textview.MaterialTextView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.zyron.filetree.R
 
 /**
@@ -30,12 +30,12 @@ import com.zyron.filetree.R
  * @param itemView The view of the item in the RecyclerView.
  */
 class FileTreeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-  /** View for the chevron icon indicating expandable or collapsible state. */
-  val chevronIconView: ImageView = itemView.findViewById(R.id.chevronIconView)
+    /** View for the chevron icon indicating expandable or collapsible state. */
+    val chevronIconView: ImageView = itemView.findViewById(R.id.chevronIconView)
 
-  /** View for the file icon representing the type of file. */
-  val fileIconView: ImageView = itemView.findViewById(R.id.fileIconView)
+    /** View for the file icon representing the type of file. */
+    val fileIconView: ImageView = itemView.findViewById(R.id.fileIconView)
 
-  /** View for displaying the name of the file or folder. */
-  val fileNameView: TextView = itemView.findViewById(R.id.fileNameView)
+    /** View for displaying the name of the file or folder. */
+    val fileNameView: TextView = itemView.findViewById(R.id.fileNameView)
 }

@@ -3,20 +3,19 @@ package com.rk.filetree.provider
 import com.rk.filetree.interfaces.FileObject
 import java.io.File
 
-
-//wrapper for java.io.File
+// wrapper for java.io.File
 class file(val file: File) : FileObject {
 
     override fun listFiles(): List<FileObject> {
         val list = file.listFiles()
-        if (list.isNullOrEmpty()){
+        if (list.isNullOrEmpty()) {
             return emptyList()
         }
 
         return list.map { f -> file(f) }
     }
 
-    fun getNativeFile():File{
+    fun getNativeFile(): File {
         return file
     }
 
@@ -25,11 +24,11 @@ class file(val file: File) : FileObject {
     }
 
     override fun isFile(): Boolean {
-       return file.isFile
+        return file.isFile
     }
 
     override fun getName(): String {
-       return file.name
+        return file.name
     }
 
     override fun getParentFile(): FileObject? {

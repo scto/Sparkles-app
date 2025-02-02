@@ -18,41 +18,41 @@ import java.io.File
 /** Interface to listen for events within a file tree, including clicks and updates. */
 interface FileTreeEventListener {
 
-  /**
-   * Called when a file is clicked.
-   *
-   * @param file The file that was clicked.
-   */
-  fun onFileClick(file: File)
+    /**
+     * Called when a file is clicked.
+     *
+     * @param file The file that was clicked.
+     */
+    fun onFileClick(file: File)
 
-  /**
-   * Called when a folder is clicked.
-   *
-   * @param folder The folder that was clicked.
-   */
-  fun onFolderClick(folder: File)
+    /**
+     * Called when a folder is clicked.
+     *
+     * @param folder The folder that was clicked.
+     */
+    fun onFolderClick(folder: File)
 
-  /**
-   * Called when a file is long-clicked.
-   *
-   * @param file The file that was long-clicked.
-   * @return True if the long-click event was handled, false otherwise.
-   */
-  fun onFileLongClick(file: File): Boolean
+    /**
+     * Called when a file is long-clicked.
+     *
+     * @param file The file that was long-clicked.
+     * @return True if the long-click event was handled, false otherwise.
+     */
+    fun onFileLongClick(file: File): Boolean
 
-  /**
-   * Called when a folder is long-clicked.
-   *
-   * @param folder The folder that was long-clicked.
-   * @return True if the long-click event was handled, false otherwise.
-   */
-  fun onFolderLongClick(folder: File): Boolean
+    /**
+     * Called when a folder is long-clicked.
+     *
+     * @param folder The folder that was long-clicked.
+     * @return True if the long-click event was handled, false otherwise.
+     */
+    fun onFolderLongClick(folder: File): Boolean
 
-  /**
-   * Called when the file tree view is updated.
-   *
-   * @param startPosition The starting position of the update.
-   * @param itemCount The number of items updated.
-   */
-  fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int)
+    /**
+     * Called when the file tree view is updated.
+     *
+     * @param startPosition The starting position of the update.
+     * @param itemCount The number of items updated.
+     */
+    fun onFileTreeViewUpdated(startPosition: Int, itemCount: Int)
 }

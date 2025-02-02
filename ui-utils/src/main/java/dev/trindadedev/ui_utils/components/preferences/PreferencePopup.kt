@@ -29,39 +29,40 @@ import dev.trindadedev.ui_utils.R
 class PreferencePopup
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-  LinearLayout(context, attrs, defStyleAttr) {
+    LinearLayout(context, attrs, defStyleAttr) {
 
-  public val preferenceTitle: TextView
-  public val preferenceDescription: TextView
-  public val preference: View
-  val popupMenu: PopupMenu = PopupMenu(context, this)
+    public val preferenceTitle: TextView
+    public val preferenceDescription: TextView
+    public val preference: View
+    val popupMenu: PopupMenu = PopupMenu(context, this)
 
-  init {
-    LayoutInflater.from(context).inflate(R.layout.layout_preference, this, true)
+    init {
+        LayoutInflater.from(context).inflate(R.layout.layout_preference, this, true)
 
-    preferenceTitle = findViewById(R.id.preference_title)
-    preferenceDescription = findViewById(R.id.preference_description)
-    preference = findViewById(R.id.preference)
+        preferenceTitle = findViewById(R.id.preference_title)
+        preferenceDescription = findViewById(R.id.preference_description)
+        preference = findViewById(R.id.preference)
 
-    context.theme.obtainStyledAttributes(attrs, R.styleable.PreferencePopup, 0, 0).apply {
-      try {
-        val title = getString(R.styleable.PreferencePopup_preferencePopupTitle) ?: ""
-        val description = getString(R.styleable.PreferencePopup_preferencePopupDescription) ?: ""
-        preferenceTitle.text = title
-        preferenceDescription.text = description
-      } finally {
-        recycle()
-      }
+        context.theme.obtainStyledAttributes(attrs, R.styleable.PreferencePopup, 0, 0).apply {
+            try {
+                val title = getString(R.styleable.PreferencePopup_preferencePopupTitle) ?: ""
+                val description =
+                    getString(R.styleable.PreferencePopup_preferencePopupDescription) ?: ""
+                preferenceTitle.text = title
+                preferenceDescription.text = description
+            } finally {
+                recycle()
+            }
+        }
+
+        preference.setOnClickListener { popupMenu.show() }
     }
 
-    preference.setOnClickListener { popupMenu.show() }
-  }
+    fun addPopupMenuItem(itemTitle: String) {
+        popupMenu.menu.add(itemTitle)
+    }
 
-  fun addPopupMenuItem(itemTitle: String) {
-    popupMenu.menu.add(itemTitle)
-  }
-
-  fun setMenuListener(listener: PopupMenu.OnMenuItemClickListener) {
-    popupMenu.setOnMenuItemClickListener(listener)
-  }
+    fun setMenuListener(listener: PopupMenu.OnMenuItemClickListener) {
+        popupMenu.setOnMenuItemClickListener(listener)
+    }
 }

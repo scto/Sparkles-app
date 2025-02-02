@@ -20,40 +20,43 @@ import java.util.concurrent.Future
 
 /** Manages the mapping of file nodes using a single-threaded executor. */
 object FileMapManager {
-  private var fileCacheFuture: Future<*>? = null
-  private val executor = Executors.newSingleThreadExecutor()
+    private var fileCacheFuture: Future<*>? = null
+    private val executor = Executors.newSingleThreadExecutor()
 
-  /** Stops the current file mapping task, if one is running. */
-  fun stopFileMapping() {
-    fileCacheFuture?.cancel(true)
-    fileCacheFuture = null
-    Log.i(this::class.java.simpleName, "FileMapping stopped")
-  }
-
-  /**
-   * Starts the file mapping process on a separate thread.
-   *
-   * @param nodes The list of root nodes to process.
-   * @param priority Optional priority setting for the mapping thread.
-   */
-  fun startFileMapping(nodes: List<FileTreeNode>, priority: Int? = null) {
-    if (fileCacheFuture == null) {
-      fileCacheFuture =
-        executor
-          .submit {
-            try {
-              val fileCache = ConcurrentFileMap(nodes)
-              fileCache.run()
-            } catch (e: InterruptedException) {
-              Thread.currentThread().interrupt()
-            } catch (e: Exception) {
-              Log.e(this::class.java.simpleName, "Error in FileMapping", e)
-            }
-          }
-          .apply { priority?.let { (this as Thread).priority = it } }
-      Log.i(this::class.java.simpleName, "FileMapping started")
-    } else {
-      Log.e(this::class.java.simpleName, "FileMapping is already running; this might cause issues")
+    /** Stops the current file mapping task, if one is running. */
+    fun stopFileMapping() {
+        fileCacheFuture?.cancel(true)
+        fileCacheFuture = null
+        Log.i(this::class.java.simpleName, "FileMapping stopped")
     }
-  }
+
+    /**
+     * Starts the file mapping process on a separate thread.
+     *
+     * @param nodes The list of root nodes to process.
+     * @param priority Optional priority setting for the mapping thread.
+     */
+    fun startFileMapping(nodes: List<FileTreeNode>, priority: Int? = null) {
+        if (fileCacheFuture == null) {
+            fileCacheFuture =
+                executor
+                    .submit {
+                        try {
+                            val fileCache = ConcurrentFileMap(nodes)
+                            fileCache.run()
+                        } catch (e: InterruptedException) {
+                            Thread.currentThread().interrupt()
+                        } catch (e: Exception) {
+                            Log.e(this::class.java.simpleName, "Error in FileMapping", e)
+                        }
+                    }
+                    .apply { priority?.let { (this as Thread).priority = it } }
+            Log.i(this::class.java.simpleName, "FileMapping started")
+        } else {
+            Log.e(
+                this::class.java.simpleName,
+                "FileMapping is already running; this might cause issues",
+            )
+        }
+    }
 }

@@ -14,9 +14,9 @@ import com.rk.filetree.provider.DefaultFileIconProvider
 import com.rk.filetree.util.Sorter
 
 /**
- * A custom RecyclerView widget that displays a hierarchical file structure.
- * This view allows users to interact with files in a tree-like format, supporting
- * both click and long-click events on individual file nodes.
+ * A custom RecyclerView widget that displays a hierarchical file structure. This view allows users
+ * to interact with files in a tree-like format, supporting both click and long-click events on
+ * individual file nodes.
  */
 class FileTree : RecyclerView {
 
@@ -28,16 +28,16 @@ class FileTree : RecyclerView {
     /**
      * Constructor used when creating the view programmatically.
      *
-     * @param context The Context the view is running in, through which it can
-     *        access the current theme, resources, etc.
+     * @param context The Context the view is running in, through which it can access the current
+     *   theme, resources, etc.
      */
     constructor(context: Context) : super(context)
 
     /**
      * Constructor that is called when inflating the view from XML.
      *
-     * @param context The Context the view is running in, through which it can
-     *        access the current theme, resources, etc.
+     * @param context The Context the view is running in, through which it can access the current
+     *   theme, resources, etc.
      * @param attrs The attributes of the XML tag that is inflating the view.
      */
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -45,14 +45,17 @@ class FileTree : RecyclerView {
     /**
      * Constructor called when inflating from XML with a default style attribute.
      *
-     * @param context The Context the view is running in, through which it can
-     *        access the current theme, resources, etc.
+     * @param context The Context the view is running in, through which it can access the current
+     *   theme, resources, etc.
      * @param attrs The attributes of the XML tag that is inflating the view.
-     * @param defStyleAttr An attribute in the current theme that contains a
-     *        reference to a style resource that supplies default values for
-     *        the view.
+     * @param defStyleAttr An attribute in the current theme that contains a reference to a style
+     *   resource that supplies default values for the view.
      */
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(
+        context: Context,
+        attrs: AttributeSet,
+        defStyleAttr: Int,
+    ) : super(context, attrs, defStyleAttr)
 
     // Initialization block
     init {
@@ -64,8 +67,8 @@ class FileTree : RecyclerView {
     /**
      * Sets a custom icon provider to supply icons for different file types.
      *
-     * @param fileIconProvider The implementation of the FileIconProvider interface
-     *        that will provide icons for file objects.
+     * @param fileIconProvider The implementation of the FileIconProvider interface that will
+     *   provide icons for file objects.
      */
     fun setIconProvider(fileIconProvider: FileIconProvider) {
         fileTreeAdapter.iconProvider = fileIconProvider
@@ -74,8 +77,8 @@ class FileTree : RecyclerView {
     /**
      * Sets a listener that will be notified when a file node is clicked.
      *
-     * @param clickListener The implementation of the FileClickListener interface
-     *        that will handle click events on file nodes.
+     * @param clickListener The implementation of the FileClickListener interface that will handle
+     *   click events on file nodes.
      */
     fun setOnFileClickListener(clickListener: FileClickListener) {
         fileTreeAdapter.onClickListener = clickListener
@@ -84,8 +87,8 @@ class FileTree : RecyclerView {
     /**
      * Sets a listener that will be notified when a file node is long-clicked.
      *
-     * @param longClickListener The implementation of the FileLongClickListener interface
-     *        that will handle long-click events on file nodes.
+     * @param longClickListener The implementation of the FileLongClickListener interface that will
+     *   handle long-click events on file nodes.
      */
     fun setOnFileLongClickListener(longClickListener: FileLongClickListener) {
         fileTreeAdapter.onLongClickListener = longClickListener
@@ -98,23 +101,20 @@ class FileTree : RecyclerView {
      * Loads the file tree starting from the specified root file.
      *
      * @param file The FileObject representing the root directory to be displayed.
-     * @param showRootNodeX Optional parameter to determine whether the root node
-     *        should be displayed. If null or true, the root node will be shown.
+     * @param showRootNodeX Optional parameter to determine whether the root node should be
+     *   displayed. If null or true, the root node will be shown.
      */
     fun loadFiles(file: FileObject, showRootNodeX: Boolean? = null) {
         rootFileObject = file
 
-        showRootNodeX?.let {
-            showRootNode = it
-        }
+        showRootNodeX?.let { showRootNode = it }
 
-        val nodes: List<Node<FileObject>> = if (showRootNode) {
-            mutableListOf<Node<FileObject>>().apply {
-                add(Node(file))
+        val nodes: List<Node<FileObject>> =
+            if (showRootNode) {
+                mutableListOf<Node<FileObject>>().apply { add(Node(file)) }
+            } else {
+                Sorter.sort(file)
             }
-        } else {
-            Sorter.sort(file)
-        }
 
         if (!init) {
             if (fileTreeAdapter.iconProvider == null) {
@@ -130,17 +130,15 @@ class FileTree : RecyclerView {
     }
 
     /**
-     * Reloads the file tree, refreshing the display with the current state of the
-     * root directory.
+     * Reloads the file tree, refreshing the display with the current state of the root directory.
      */
     fun reloadFileTree() {
-        val nodes: List<Node<FileObject>> = if (showRootNode) {
-            mutableListOf<Node<FileObject>>().apply {
-                add(Node(rootFileObject))
+        val nodes: List<Node<FileObject>> =
+            if (showRootNode) {
+                mutableListOf<Node<FileObject>>().apply { add(Node(rootFileObject)) }
+            } else {
+                Sorter.sort(rootFileObject)
             }
-        } else {
-            Sorter.sort(rootFileObject)
-        }
         fileTreeAdapter.submitList(nodes)
     }
 }

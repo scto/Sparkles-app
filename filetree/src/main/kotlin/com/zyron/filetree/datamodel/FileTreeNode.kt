@@ -23,39 +23,40 @@ import java.io.File
  * @property level The depth level of this node in the file tree.
  */
 data class FileTreeNode(var file: File, var parent: FileTreeNode? = null, var level: Int = 0) {
-  var isExpanded: Boolean = false
-  var childrenStartIndex: Int = 0
-  var childrenEndIndex: Int = 0
-  var childrenLoaded: Boolean = false
+    var isExpanded: Boolean = false
+    var childrenStartIndex: Int = 0
+    var childrenEndIndex: Int = 0
+    var childrenLoaded: Boolean = false
 
-  /**
-   * Sorts the children of this node, separating directories from files and sorting them
-   * alphabetically.
-   *
-   * @return A list of FileTreeNode objects representing the sorted children.
-   */
-  fun sortNode(): List<FileTreeNode> {
-    val children =
-      file
-        .listFiles()
-        ?.asSequence()
-        ?.partition { it.isDirectory }
-        ?.let { (directories, files) ->
-          (directories.sortedBy { it.name.lowercase() } + files.sortedBy { it.name.lowercase() })
-        } ?: emptyList()
-    return children.map { childFile ->
-      FileTreeNode(file = childFile, parent = this, level = level + 1)
+    /**
+     * Sorts the children of this node, separating directories from files and sorting them
+     * alphabetically.
+     *
+     * @return A list of FileTreeNode objects representing the sorted children.
+     */
+    fun sortNode(): List<FileTreeNode> {
+        val children =
+            file
+                .listFiles()
+                ?.asSequence()
+                ?.partition { it.isDirectory }
+                ?.let { (directories, files) ->
+                    (directories.sortedBy { it.name.lowercase() } +
+                        files.sortedBy { it.name.lowercase() })
+                } ?: emptyList()
+        return children.map { childFile ->
+            FileTreeNode(file = childFile, parent = this, level = level + 1)
+        }
     }
-  }
 
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other == null || javaClass != other.javaClass) return false
-    other as FileTreeNode
-    return file.absolutePath == other.file.absolutePath
-  }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        other as FileTreeNode
+        return file.absolutePath == other.file.absolutePath
+    }
 
-  override fun hashCode(): Int {
-    return file.absolutePath.hashCode()
-  }
+    override fun hashCode(): Int {
+        return file.absolutePath.hashCode()
+    }
 }

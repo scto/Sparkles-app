@@ -22,48 +22,48 @@ import java.io.File
  */
 interface FileTreeIconProvider {
 
-  /**
-   * Returns the resource ID for the chevron icon used in the file tree.
-   *
-   * @return Resource ID for the chevron icon.
-   */
-  @DrawableRes fun getChevronIcon(): Int
+    /**
+     * Returns the resource ID for the chevron icon used in the file tree.
+     *
+     * @return Resource ID for the chevron icon.
+     */
+    @DrawableRes fun getChevronIcon(): Int
 
-  /**
-   * Returns the resource ID for the default folder icon.
-   *
-   * @return Resource ID for the default folder icon.
-   */
-  @DrawableRes fun getDefaultFolderIcon(): Int
+    /**
+     * Returns the resource ID for the default folder icon.
+     *
+     * @return Resource ID for the default folder icon.
+     */
+    @DrawableRes fun getDefaultFolderIcon(): Int
 
-  /**
-   * Returns the resource ID for the default file icon.
-   *
-   * @return Resource ID for the default file icon.
-   */
-  @DrawableRes fun getDefaultFileIcon(): Int
+    /**
+     * Returns the resource ID for the default file icon.
+     *
+     * @return Resource ID for the default file icon.
+     */
+    @DrawableRes fun getDefaultFileIcon(): Int
 
-  /**
-   * Returns the resource ID for the folder icon based on the folder's name.
-   *
-   * @param folder The folder whose icon is to be determined.
-   * @return Resource ID for the folder icon.
-   */
-  @DrawableRes fun getIconForFolder(folder: File): Int
+    /**
+     * Returns the resource ID for the folder icon based on the folder's name.
+     *
+     * @param folder The folder whose icon is to be determined.
+     * @return Resource ID for the folder icon.
+     */
+    @DrawableRes fun getIconForFolder(folder: File): Int
 
-  /**
-   * Returns the resource ID for the file icon based on the file's name.
-   *
-   * @param file The file whose icon is to be determined.
-   * @return Resource ID for the file icon.
-   */
-  @DrawableRes fun getIconForFile(file: File): Int
+    /**
+     * Returns the resource ID for the file icon based on the file's name.
+     *
+     * @param file The file whose icon is to be determined.
+     * @return Resource ID for the file icon.
+     */
+    @DrawableRes fun getIconForFile(file: File): Int
 
-  /**
-   * Returns the resource ID for the file icon based on the file's extension.
-   *
-   * @param extension The extension of the file whose icon is to be determined.
-   * @return Resource ID for the file icon.
-   */
-  @DrawableRes fun getIconForExtension(extension: String): Int
+    /**
+     * Returns the resource ID for the file icon based on the file's extension.
+     *
+     * @param extension The extension of the file whose icon is to be determined.
+     * @return Resource ID for the file icon.
+     */
+    @DrawableRes fun getIconForExtension(extension: String): Int
 }

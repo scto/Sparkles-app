@@ -3,10 +3,10 @@ package com.rk.filetree.provider
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import com.rk.filetree.model.Node
 import com.rk.filetree.R
 import com.rk.filetree.interfaces.FileIconProvider
 import com.rk.filetree.interfaces.FileObject
+import com.rk.filetree.model.Node
 
 class DefaultFileIconProvider(context: Context) : FileIconProvider {
     private val file = ContextCompat.getDrawable(context, R.drawable.file)
@@ -15,9 +15,9 @@ class DefaultFileIconProvider(context: Context) : FileIconProvider {
     private val expandMore = ContextCompat.getDrawable(context, R.drawable.round_expand_more_24)
 
     override fun getIcon(node: Node<FileObject>): Drawable? {
-        return if (node.value.isFile()){
+        return if (node.value.isFile()) {
             file
-        }else{
+        } else {
             folder
         }
     }

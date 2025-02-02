@@ -10,14 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.rk.filetree.model.Node
 import com.rk.filetree.R
-import com.rk.filetree.util.Sorter
-import com.rk.filetree.model.TreeViewModel
 import com.rk.filetree.interfaces.FileClickListener
 import com.rk.filetree.interfaces.FileIconProvider
 import com.rk.filetree.interfaces.FileLongClickListener
 import com.rk.filetree.interfaces.FileObject
+import com.rk.filetree.model.Node
+import com.rk.filetree.model.TreeViewModel
+import com.rk.filetree.util.Sorter
 import com.rk.filetree.widget.FileTree
 
 class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -27,53 +27,48 @@ class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 }
 
 class NodeDiffCallback : DiffUtil.ItemCallback<Node<FileObject>>() {
-    override fun areItemsTheSame(
-        oldItem: Node<FileObject>, newItem: Node<FileObject>
-    ): Boolean {
+    override fun areItemsTheSame(oldItem: Node<FileObject>, newItem: Node<FileObject>): Boolean {
         return oldItem.value.getAbsolutePath() == newItem.value.getAbsolutePath()
     }
 
-    override fun areContentsTheSame(
-        oldItem: Node<FileObject>, newItem: Node<FileObject>
-    ): Boolean {
+    override fun areContentsTheSame(oldItem: Node<FileObject>, newItem: Node<FileObject>): Boolean {
         return oldItem == newItem
     }
 }
 
-class FileTreeAdapter(private val context: Context,val fileTree: FileTree) :
+class FileTreeAdapter(private val context: Context, val fileTree: FileTree) :
     ListAdapter<Node<FileObject>, ViewHolder>(NodeDiffCallback()) {
 
     var onClickListener: FileClickListener? = null
     var onLongClickListener: FileLongClickListener? = null
     var iconProvider: FileIconProvider? = null
 
-
     private var animator = fileTree.itemAnimator
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.recycler_view_item, parent, false)
         val holder = ViewHolder(view)
 
+        val clickListener =
+            View.OnClickListener {
+                val adapterPosition = holder.adapterPosition
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val clickedNode = getItem(adapterPosition)
 
-        val clickListener = View.OnClickListener {
-            val adapterPosition = holder.adapterPosition
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                val clickedNode = getItem(adapterPosition)
-
-                if (clickedNode.value.isDirectory()) {
-                    if (!clickedNode.isExpand) {
-                        fileTree.itemAnimator = animator
-                        expandNode(clickedNode)
-                    } else {
-                        fileTree.itemAnimator = null
-                        collapseNode(clickedNode)
+                    if (clickedNode.value.isDirectory()) {
+                        if (!clickedNode.isExpand) {
+                            fileTree.itemAnimator = animator
+                            expandNode(clickedNode)
+                        } else {
+                            fileTree.itemAnimator = null
+                            collapseNode(clickedNode)
+                        }
+                        notifyItemChanged(adapterPosition)
                     }
-                    notifyItemChanged(adapterPosition)
+                    onClickListener?.onClick(clickedNode)
                 }
-                onClickListener?.onClick(clickedNode)
             }
-        }
-
 
         holder.itemView.setOnClickListener(clickListener)
 
@@ -85,7 +80,6 @@ class FileTreeAdapter(private val context: Context,val fileTree: FileTree) :
             }
             true
         }
-
 
         holder.expandView.setOnClickListener(clickListener)
         holder.fileView.setPadding(0, 0, 0, 0)
@@ -150,5 +144,4 @@ class FileTreeAdapter(private val context: Context,val fileTree: FileTree) :
         clickedNode.isExpand = false
         submitList(tempData)
     }
-
 }
