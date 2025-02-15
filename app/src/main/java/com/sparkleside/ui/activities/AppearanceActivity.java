@@ -1,5 +1,6 @@
 package com.sparkleside.ui.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Toast;
@@ -80,6 +81,11 @@ public class AppearanceActivity extends BaseActivity {
     pref.setDescription(getString(R.string.monet_desc));
     pref.setValue(Preferences.Theme.isMonetEnable(this));
     pref.setBackgroundPosition("0");
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        	pref.setViewEnabled(true);
+        } else {
+        	pref.setViewEnabled(false);
+        }
     pref.setSwitchChangedListener(
         (c, isChecked) -> {
           Preferences.Theme.setMonetEnable(this, isChecked);

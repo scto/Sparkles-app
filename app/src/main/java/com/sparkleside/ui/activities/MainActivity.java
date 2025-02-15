@@ -103,8 +103,8 @@ public class MainActivity extends BaseActivity {
      perview.findViewById(android.R.id.button3);
      positive.setOnClickListener(v -> {
      Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-   intent.setData(Uri.parse("package:" + getPackageName()));
-   startActivity(intent);
+      intent.setData(Uri.parse("package:" + getPackageName()));
+     startActivity(intent);
      });
      negative.setOnClickListener(v ->{ finishAffinity();});
      perm.setCancelable(false);
