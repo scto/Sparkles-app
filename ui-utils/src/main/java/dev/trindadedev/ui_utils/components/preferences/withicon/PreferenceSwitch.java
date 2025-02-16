@@ -145,12 +145,14 @@ public class PreferenceSwitch extends RelativeLayout implements View.OnClickList
            preferenceDescription.setEnabled(false);  
            preferenceIcon.setEnabled(false);  
            preferenceSwitch.setEnabled(false); 
+           root.setEnabled(false);   
            
    	} else {
    		preferenceName.setEnabled(true);
            preferenceDescription.setEnabled(true);  
            preferenceIcon.setEnabled(true);  
-           preferenceSwitch.setEnabled(true); 
+           preferenceSwitch.setEnabled(true);
+           root.setEnabled(true);  
    	}
    }  
   

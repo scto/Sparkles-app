@@ -31,6 +31,7 @@ import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.TextView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity {
   private FileTreeIconProvider fileIconProvider;
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
+  private AlertDialog permissionDialog;
   private AtomicInteger currentIndex = new AtomicInteger(-1);
     
 
@@ -92,7 +94,7 @@ public class MainActivity extends BaseActivity {
     
     /*Permission Controller by Rakhmonov Bobur*/
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { 
-     if (!Environment.isExternalStorageManager()) { 
+     if(!Environment.isExternalStorageManager()) { 
      MaterialAlertDialogBuilder perm = new MaterialAlertDialogBuilder(this);
      LayoutInflater permview= getLayoutInflater();
      View perview = (View) permview.inflate(R.layout.dialogpermission, null);
@@ -105,10 +107,12 @@ public class MainActivity extends BaseActivity {
      Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
       intent.setData(Uri.parse("package:" + getPackageName()));
      startActivity(intent);
+     
      });
      negative.setOnClickListener(v ->{ finishAffinity();});
      perm.setCancelable(false);
-     perm.create().show();           
+     permissionDialog = perm.create();
+     permissionDialog.show();           
      
      
   
@@ -221,7 +225,7 @@ public class MainActivity extends BaseActivity {
     binding.editor.setTypefaceText(
         Typeface.createFromAsset(getAssets(), "fonts/jetbrainsmono.ttf"));
 
-    
+    binding.tabs.addTab(binding.tabs.newTab().setText("Blank.txt"));
 
     ViewCompat.setOnApplyWindowInsetsListener(
         binding.fab,
@@ -246,7 +250,9 @@ public class MainActivity extends BaseActivity {
         binding.editor.getSearcher().search(binding.edittext1.getText().toString(),new EditorSearcher.SearchOptions(false, true));
         binding.editor.getSearcher().gotoNext();                                            
     });
+    
   }
+    
     
 
   
@@ -333,6 +339,19 @@ public class MainActivity extends BaseActivity {
 			super.onBackPressed();
 		}
 	}
+   @Override
+    protected void onResume() {
+    super.onResume();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Environment.isExternalStorageManager()) {
+            // Dismiss dialog if permission is granted and dialog is showing
+            if (permissionDialog != null && permissionDialog.isShowing()) {
+                permissionDialog.dismiss();
+                permissionDialog = null;
+            }
+        }
+    }
+}
     
     public void fabCompiler(){
     MaterialContainerTransform transition = buildContainerTransform(true);
