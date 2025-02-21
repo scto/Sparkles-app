@@ -1,4 +1,4 @@
-name: Android CI
+name: Android DebugCI
 
 on:
   push:
@@ -14,17 +14,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: notify telegram
-        uses: EverythingSuckz/github-telegram-notify@main
-        continue-on-error: true
-        with:
-          bot_token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          chat_id: -1002355760766
-          topic_id: 11
           
-  build_release_apk:
-    name: Build App Release APK
+  build:
+    name: Build App Debug APK
     runs-on: ubuntu-latest
 
     steps:
@@ -45,11 +37,10 @@ jobs:
         uses: gradle/actions/wrapper-validation@v4
 
       - name: Build with Gradle
-        id: gradle_build_release
-        run: ./gradlew assembleRelease 
+        run: ./gradlew assembleDebug 
 
-      - name: Upload release apk
+      - name: Upload debug apk
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: app/build/outputs/apk/release/app-release.apk
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
