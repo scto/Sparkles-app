@@ -1,5 +1,6 @@
 package com.sparkleside.ui.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.content.Intent;
 import android.widget.Toast;
@@ -53,16 +54,19 @@ public class AppearanceActivity extends BaseActivity {
     binding.materialbutton1.setOnClickListener(
         v -> {
           Preferences.Theme.setThemeMode(this, AppCompatDelegate.MODE_NIGHT_NO);
+          binding.linear5.check(R.id.materialbutton1);
         });
 
     binding.materialbutton2.setOnClickListener(
         v -> {
           Preferences.Theme.setThemeMode(this, AppCompatDelegate.MODE_NIGHT_YES);
+          binding.linear5.check(R.id.materialbutton2);
         });
 
     binding.materialbutton3.setOnClickListener(
         v -> {
           Preferences.Theme.setThemeMode(this, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+          binding.linear5.check(R.id.materialbutton3);
         });
 
     binding.linear1.addView(getMonetPreference());
@@ -77,6 +81,11 @@ public class AppearanceActivity extends BaseActivity {
     pref.setDescription(getString(R.string.monet_desc));
     pref.setValue(Preferences.Theme.isMonetEnable(this));
     pref.setBackgroundPosition("0");
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        	pref.setViewEnabled(true);
+        } else {
+        	pref.setViewEnabled(false);
+        }
     pref.setSwitchChangedListener(
         (c, isChecked) -> {
           Preferences.Theme.setMonetEnable(this, isChecked);

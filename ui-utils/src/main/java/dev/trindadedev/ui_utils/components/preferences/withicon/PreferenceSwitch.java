@@ -139,6 +139,21 @@ public class PreferenceSwitch extends RelativeLayout implements View.OnClickList
 
         root.setBackgroundResource(backgroundResource);
     }
-    
+   public void setViewEnabled(boolean status) {
+   	if(status==false) {
+   		preferenceName.setEnabled(false);
+           preferenceDescription.setEnabled(false);  
+           preferenceIcon.setEnabled(false);  
+           preferenceSwitch.setEnabled(false); 
+           root.setEnabled(false);   
+           
+   	} else {
+   		preferenceName.setEnabled(true);
+           preferenceDescription.setEnabled(true);  
+           preferenceIcon.setEnabled(true);  
+           preferenceSwitch.setEnabled(true);
+           root.setEnabled(true);  
+   	}
+   }  
   
 }

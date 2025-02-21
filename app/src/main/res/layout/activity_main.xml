@@ -24,11 +24,13 @@
                 android:layout_height="?attr/actionBarSize"
                 app:title="Sparkles" />
         </com.google.android.material.appbar.AppBarLayout>
+         
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+       
             <com.sparkleside.ui.components.ExpandableLayout
                 android:id="@+id/options"
                 android:layout_width="match_parent"
@@ -95,6 +97,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </com.sparkleside.ui.components.ExpandableLayout>
+            
             <com.sparkleside.ui.components.ExpandableLayout
                 android:id="@+id/searchl"
                 android:layout_width="match_parent"
@@ -187,14 +190,20 @@
 
                 </LinearLayout>
             </com.sparkleside.ui.components.ExpandableLayout>
-            <com.google.android.material.divider.MaterialDivider
+           
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="2dp" />
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"
+                app:tabUnboundedRipple="false"
+                app:tabGravity="start" />    
             <LinearLayout
                 android:id="@+id/editor_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+                
                 <io.github.rosemoe.sora.widget.CodeEditor
                     android:id="@+id/editor"
                     android:layout_width="match_parent"
