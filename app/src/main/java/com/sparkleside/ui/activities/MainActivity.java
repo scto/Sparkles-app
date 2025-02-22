@@ -83,8 +83,6 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
   private AlertDialog permissionDialog;
-  private EditorViewModel editorViewModel;
-  private AtomicInteger currentIndex = new AtomicInteger(-1);
     
 
   @Override
