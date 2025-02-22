@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +42,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.sidesheet.SideSheetBehavior;
 import com.google.android.material.sidesheet.SideSheetDialog;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityMainBinding;
@@ -50,7 +52,9 @@ import com.sparkleside.ui.base.BaseActivity;
 import com.sparkleside.ui.components.ExpandableLayout;
 import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
 import com.sparkleside.ui.editor.schemes.SparklesScheme;
+import com.zyron.filetree.events.FileTreeEventListener;
 import com.zyron.filetree.provider.FileTreeIconProvider;
+import io.github.rosemoe.sora.widget.CodeEditor;
 import io.github.rosemoe.sora.widget.EditorSearcher;
 import io.github.rosemoe.sora.widget.schemes.SchemeDarcula;
 import io.github.rosemoe.sora.widget.schemes.SchemeEclipse;
@@ -60,20 +64,26 @@ import io.github.rosemoe.sora.widget.schemes.SchemeVS2019;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
+import androidx.activity.ComponentActivity;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.robok.engine.feature.compiler.java.JavaCompiler;
 import org.robok.engine.feature.compiler.java.JavaCompiler.CompileItem;
 import com.google.android.material.transition.platform.MaterialContainerTransform;
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
+import com.sparkleside.util.FileUtil;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements FileTreeEventListener  {
 
   private ActivityMainBinding binding;
   private FileTreeIconProvider fileIconProvider;
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
   private AlertDialog permissionDialog;
+  private EditorViewModel editorViewModel;
   private AtomicInteger currentIndex = new AtomicInteger(-1);
     
 
@@ -91,7 +101,7 @@ public class MainActivity extends BaseActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
     setSupportActionBar(binding.toolbar);
-    
+
     /*Permission Controller by Rakhmonov Bobur*/
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { 
      if(!Environment.isExternalStorageManager()) { 
@@ -107,15 +117,15 @@ public class MainActivity extends BaseActivity {
      Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
       intent.setData(Uri.parse("package:" + getPackageName()));
      startActivity(intent);
-     
+
      });
      negative.setOnClickListener(v ->{ finishAffinity();});
      perm.setCancelable(false);
      permissionDialog = perm.create();
      permissionDialog.show();           
-     
-     
-  
+
+
+
      } 
       }
     
@@ -130,9 +140,9 @@ public class MainActivity extends BaseActivity {
    // marginLayoutParams.bottomMargin = navigationBarHeight ; // Set bottom margin in pixels
     binding.navigationView.setLayoutParams(marginLayoutParams);
 }
-    
-        
-   
+
+
+
         binding.drawer.setScrimColor(Color.TRANSPARENT);
     binding.drawer.setDrawerElevation(0f);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.app_name, R.string.app_name) { 
@@ -143,9 +153,10 @@ public class MainActivity extends BaseActivity {
              }; 
     binding.drawer.addDrawerListener(toggle);    
     binding.drawer.setFitsSystemWindows(false);
-    
+
     binding.fileTreeView.initializeFileTree(
-        "/storage/emulated/0", fileoperate, fileIconProvider);
+        "/storage/emulated/0", this, fileIconProvider);
+
 
     binding.contentGit.setVisibility(View.GONE);
     binding.contentToolbox.setVisibility(View.GONE);
@@ -186,9 +197,11 @@ public class MainActivity extends BaseActivity {
       } else {
         binding.drawer.openDrawer(GravityCompat.START);
       }
-    
-        });
 
+        });
+   
+     
+     
     binding.options.setExpansion(Preferences.Editor.isShowToolbarEnabled(this));
     binding.options.setDuration(200);
     binding.options.setOrientatin(ExpandableLayout.VERTICAL);
@@ -245,14 +258,15 @@ public class MainActivity extends BaseActivity {
           v.setLayoutParams(mlp2);
           return WindowInsetsCompat.CONSUMED;
         });
-        
+
     binding.materialbutton2.setOnClickListener( v -> { 
         binding.editor.getSearcher().search(binding.edittext1.getText().toString(),new EditorSearcher.SearchOptions(false, true));
         binding.editor.getSearcher().gotoNext();                                            
     });
     
-  }
     
+  }
+
     
 
   
@@ -341,19 +355,47 @@ public class MainActivity extends BaseActivity {
 	}
    @Override
     protected void onResume() {
-    super.onResume();
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        if (Environment.isExternalStorageManager()) {
-            // Dismiss dialog if permission is granted and dialog is showing
-            if (permissionDialog != null && permissionDialog.isShowing()) {
-                permissionDialog.dismiss();
-                permissionDialog = null;
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager()) {
+                // Dismiss dialog if permission is granted and dialog is showing
+                if (permissionDialog != null && permissionDialog.isShowing()) {
+                    permissionDialog.dismiss();
+                    permissionDialog = null;
+                }
             }
         }
     }
-}
     
-    public void fabCompiler(){
+    @Override
+    public void onFileClick(File file) {
+        
+    }
+
+    @Override
+    public void onFolderClick(File folder) {
+        
+    }
+
+    @Override
+    public boolean onFileLongClick(File file) {
+        Toast.makeText(this, "File long-clicked: " + file.getName(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public boolean onFolderLongClick(File folder) {
+        Toast.makeText(this, "Folder long-clicked: " + folder.getName(), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    @Override
+    public void onFileTreeViewUpdated(int startPosition, int itemCount) {
+        
+    }
+   
+
+public void fabCompiler(){
     MaterialContainerTransform transition = buildContainerTransform(true);
     transition.setStartView(binding.fab);
     transition.setEndView(binding.compilersCard);
@@ -392,7 +434,7 @@ public class MainActivity extends BaseActivity {
           }
         });    
     } 
-    
+
      private MaterialContainerTransform buildContainerTransform(boolean entering) {
      MaterialContainerTransform transform = new MaterialContainerTransform(MainActivity.this, entering);
      transform.setScrimColor(Color.TRANSPARENT);
@@ -423,11 +465,10 @@ public class MainActivity extends BaseActivity {
                var scheme = new SparklesScheme(binding.editor);
                scheme.apply();
                }
-           
+
            }
     }
-     
 
-    private int currentSearchIndex = 0;  
+
+    private int currentSearchIndex = 0;
 }
-  
