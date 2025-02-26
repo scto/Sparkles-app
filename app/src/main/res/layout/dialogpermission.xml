@@ -27,16 +27,16 @@
         android:paddingBottom="24dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
-        android:text="Grant the all file access Permission to Make Sparkles IDE works Correctly " />
+        android:text="@string/permission_dialog_text"
 
     <TextView
         android:id="@android:id/button1"
         style="@style/GrantPermissionsButtons.Top"
-        android:text="Grant" />
+        android:text="@string/Grant" />
 
     <TextView
         android:id="@android:id/button3"
         style="@style/GrantPermissionsButtons.Buttom"
-        android:text="Deny" />
+        android:text="@string/Deny" />
 
 </LinearLayout>
