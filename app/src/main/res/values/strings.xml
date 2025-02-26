@@ -23,6 +23,10 @@
   <string name="tooltip_terminal">Open terminal</string>
   <string name="tooltip_new_file">New File</string>
   <string name="tooltip_search">Search in code</string>
+  <string name="permission_dialog_text">Grant the all file access Permission to Make Sparkles IDE work Correctly</string>
+  <string name="Grant">Grant</string>
+  <string name="Deny">Deny</string>
+  
  <!--Appearance Settings-->
   <string name="monet_title">Use Dynamic Colors</string>
   <string name="monet_desc">Use your device color palette instead black and white</string>
