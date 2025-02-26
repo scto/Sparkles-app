@@ -27,7 +27,7 @@
         android:paddingBottom="24dp"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
-        android:text="@string/permission_dialog_text"
+        android:text="@string/permission_dialog_text" />
 
     <TextView
         android:id="@android:id/button1"
