@@ -19,14 +19,42 @@
   <string name="about_tag_developer">Desenvolvedor</string>
   <string name="tooltip_settings">Configurações</string>
   <string name="tooltip_terminal">Abrir terminal</string>
-  <string name="tooltip_new_file">Novo arquivo</string>
+  <string name="tooltip_new_file">Novo Arquivo</string>
   <string name="tooltip_search">Pesquisar no código</string>
   <string name="monet_title">Usar cores dinâmicas</string>
   <string name="monet_desc">Usar a paleta de cores do seu dispositivo em vez de branco e preto</string>
   <string name="need_restart">Precisa reiniciar</string>
+  <string name="about_tag_promote">Promotor</string>
+  <string name="about_tag_designer">Designer</string>
+  <string name="amoled_title">Tema noturno</string>
+  <string name="amoled_desc">Tema amoled preto</string>
+  <string name="art_phrase">Transformando códigos em histórias que mudam vidas✨️</string>
+  <string name="nex_phrase">Um cara à moda antiga entre os modernos</string>
+  <string name="omer_phrase">Proprietário do POPMods</string>
+  <string name="optim_phrase">Proprietário do AndroBusket</string>
+  <string name="zg_phrase">Um Designer de Material</string>
+  <string name="common_word_result">Resultado</string>
+  <string name="common_word_ok">Ok</string>
+  <string name="common_word_copy">Copiar</string>
+  <string name="apper_uimode">Definir Modo de UI:</string>
+  <string name="editor_theme">Tema do Editor</string>
+  <string name="editor_theme_desc">Escolher o Tema do Editor Sora</string>
+  <string name="editor_wordwrap">Quebra de Linha</string>
+  <string name="editor_wordwrap_desc">Ativar Quebra de Linha do Sora</string>
+  <string name="editor_fl">Mostrar Número da Primeira Linha</string>
+  <string name="editor_fl_desc">Mostrar ou ocultar o número da primeira linha</string>
+  <string name="editor_overscroll">Deslize Excedente</string>
+  <string name="editor_overscroll_desc">Ativar Deslize Excedente do Sora</string>
+  <string name="editor_ln">Mostrar Números de Linha</string>
+  <string name="editor_ln_desc">Mostrar ou ocultar os números de linha</string>
+  <string name="editor_toolbar">Mostrar Barra de Ferramentas</string>
+  <string name="editor_toolbar_desc">Mostrar ou ocultar a Barra de Ferramentas</string>
+  <string name="editor_tab">Guias (Atualmente indisponível)</string>
+  <string name="editor_tab_desc">Usar modo de guias no Sparkles</string>
+  <string name="editor_title">Formatação</string>
+  <string name="editor_theme_title">Tema do Editor Sora</string>
 
-  <!--TEAM BIO-->
-
+  <!-- TEAM BIO -->
   <string name="syntaxspin_phrase">Um Amante de Material You e Desenvolvedor Android/Web</string>
   <string name="yamenher_phrase">Um criador de coisas legais e úteis</string>
   <string name="trindadedev_phrase">Eu uso o Jetpack Compose, a propósito</string>
