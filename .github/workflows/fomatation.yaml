@@ -20,8 +20,9 @@ jobs:
           
       - name: Download ktfmt
         run: |
-          wget https://github.com/maybetrindadedev/ktfmt/releases/download/1.0.0/ktfmt-0.54-SNAPSHOT-jar-with-dependencies.jar -O ktfmt.jar
+          wget https://github.com/facebook/ktfmt/releases/download/v0.52/ktfmt-0.52-jar-with-dependencies.jar -O ktfmt.jar
 
+      - name: Run ktfmt on
       - name: Run ktfmt on Kotlin files
         run: |
           find . -name "*.kt" -exec java -jar ktfmt.jar --google-style {} +
@@ -29,8 +30,8 @@ jobs:
       - name: Commit and Push changes
         run: |
           rm ktfmt.jar
-          git config --global user.name "trindadedev13"
-          git config --global user.email "trindadedev13@gmail.com"
+          git config --global user.name "scto"
+          git config --global user.email "tschmid35@gmail.com"
           git fetch origin ${GITHUB_REF_NAME}:temp
           git add .
           git commit -m "chore: Format Kotlin Code" -m "format code with ktfmt in github actions"
@@ -65,8 +66,8 @@ jobs:
       - name: Commit and Push changes
         run: |
           rm google-java-format.jar
-          git config --global user.name "trindadedev13"
-          git config --global user.email "trindadedev13@gmail.com"
+          git config --global user.name "scto"
+          git config --global user.email "tschmid35@gmail.com"
           git fetch origin ${GITHUB_REF_NAME}:temp
           git add .
           git commit -m "chore: Format Java Code" -m "format code with google java format in github actions"
