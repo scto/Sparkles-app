@@ -54,7 +54,7 @@ jobs:
           path: sparkles-app-debug.apk
           name: sparkles-app-release
           path: sparkles-app-release.apk
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
-          name: app-release
-          path: app/build/outputs/apk/release/app-release.apk
+          #name: app-debug
+          #path: app/build/outputs/apk/debug/app-debug.apk
+          #name: app-release
+          #path: app/build/outputs/apk/release/app-release.apk
