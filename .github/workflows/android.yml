@@ -43,7 +43,6 @@ jobs:
 
       - name: Rename file 
         run: |
-          mv app-release.apk sparkles-app-release.apk
           mv app-debug.apk sparkles-app-debug.apk
           ls
           
@@ -52,8 +51,8 @@ jobs:
         with:
           name: sparkles-app-debug
           path: sparkles-app-debug.apk
-          name: sparkles-app-release
-          path: sparkles-app-release.apk
+          #name: sparkles-app-release
+          #path: sparkles-app-release.apk
           #name: app-debug
           #path: app/build/outputs/apk/debug/app-debug.apk
           #name: app-release
