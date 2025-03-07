@@ -8,13 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  init:
-    name: Init
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-          
   build:
     name: Build App Release APK
     runs-on: ubuntu-latest
@@ -39,9 +32,28 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleRelease
 
+      - name: List repo contents
+        run: ls
+          
+      - name: Get the last commit message
+        id: get_commit_msg
+        run: |
+          commit_message=$(git log -1 --pretty=format:'%s')
+          echo "message=$commit_message" >> $GITHUB_OUTPUT
+
+      - name: Rename file 
+        run: |
+          mv app-release.apk sparkles-app-release.apk
+          ls
+          
       - name: Upload release apk
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: app/build/outputs/apk/release/app-release.apk
-          
+          name: sparkles-app-release
+          path: sparkles-app-release.apk
+          #name: sparkles-app-release
+          #path: sparkles-app-release.apk
+          #name: app-debug
+          #path: app/build/outputs/apk/debug/app-debug.apk
+          #name: app-release
+          #path: app/build/outputs/apk/release/app-release.apk
