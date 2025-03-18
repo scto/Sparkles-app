@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Sparkles IDE</string>
+  <string name="com_word_settings">Einstellungen</string>
+  <string name="set_main">App Einstellungen</string>
+  <string name="set_main_desc">Ein paar von Sparkles' Aussehenseinstellungen</string>
+  <string name="common_word_allow">Erlauben</string>
+  <string name="common_word_deny">Verweigern</string>
+  <string name="set_editor">Code Editor</string>
+  <string name="set_editor_desc">Modifiziere das Aussehen des Editor</string>
+  <string name="set_terminal">Terminal</string>
+  <string name="set_terminal_desc">Bearbeiten des Terminals</string>
+  <string name="set_lib">Software von Dritten Anbietern</string>
+  <string name="set_lib_desc">Bibliotheken und Software die in Sparkles genutzt werden</string>
+  <string name="com_word_about">Über</string>
+  <string name="set_about_desc">Über Sparkles</string>
+  <string name="about_team">Team</string>
+  <string name="about_tag_translator">Übersetzer</string>
+  <string name="about_tag_developer">Entwicker</string>
+  <string name="about_tag_promote">Promoter</string>
+  <string name="about_tag_designer">Designer</string>
+  <string name="tooltip_settings">Einstellungen</string>
+  <string name="tooltip_terminal">Öffne Terminal</string>
+  <string name="tooltip_new_file">Neue Datei</string>
+  <string name="tooltip_search">Im Code suchen</string>
+  <string name="permission_dialog_text">Gib bitte die Berechtigung "Zugriff auf alle Dateien" damit Sparkles IDE richtig arbeiten kann</string>
+  <string name="Grant">Erlauben</string>
+  <string name="Deny">Verweigern</string>
+  
+ <!--Appearance Settings-->
+  <string name="monet_title">Nutze "Dynamische Farben"</string>
+  <string name="monet_desc"> Es wird die Farbpalette deines Gerätes genutzt, anstelle von Schwarz und Weiß</string>
+  <string name="amoled_title">"Nacht" Theme</string>
+  <string name="amoled_desc">"Amoled Schwarz" Theme</string>
+  <string name="need_restart">Neustart nötig</string>
+
+  <!--TEAM BIO-->
+
+  <string name="syntaxspin_phrase">A Material You Lover Android/Web Developer</string>
+  <string name="yamenher_phrase">A Kool Utilities maker</string>
+  <string name="trindadedev_phrase">I use Jetpack Compose, btw</string>
+  <string name="hanzo_phrase">Ghost</string>
+  <string name="thiarley_rocha_phrase">lets play minecraft?</string>
+  <string name="rohit_kushvaha_phrase">Idk</string>
+  <string name="neoapps_phrase">i use arch, btw</string>
+  <string name="jaiel_lima_phrase">Happy is the man that finds wisdom, and the man that gets understanding. \n\n Proverbs 3:13</string>
+  <string name="alex_phrase">PaxSenix bootlegger</string>
+  <string name="vivek_phrase">Some people hurt you and act like you hurt them</string>
+  <string name="art_phrase">Turning codes into life changing stories✨️</string>
+  <string name="nex_phrase">An old fashioned guy among trendy</string>
+  <string name="omer_phrase">POPMods Owner</string> 
+  <string name="optim_phrase">AndroBusket Owner</string>
+  <string name="zg_phrase">A Material Designer</string>
+
+
+
+  <string name="common_word_result">Ergebnis</string>
+  <string name="common_word_ok">Okay</string>
+  <string name="common_word_copy">Kopieren</string>
+  
+  <!--new settings Strings-->
+  <string name="apper_uimode">Setze den Ui Mode:</string>
+  <!--Code editor settings , avoid using long sentences-->
+  <string name="editor_theme">Editor Theme</string>
+  <string name="editor_theme_desc">Wähle das "Sora Editor Theme"</string>
+  <string name="editor_wordwrap">WordWrap</string>
+  <string name="editor_wordwrap_desc">Aktiviere das "WordWrap von Sora"</string>
+  <string name="editor_fl">Zeige Nummer der ersten Linie</string>
+  <string name="editor_fl_desc">Zeige oder verstecke die Nummer der ersten Linie</string>
+  <string name="editor_overscroll">OverScroll</string>
+  <string name="editor_overscroll_desc">Aktiviere das "OverScroll von Sora"</string>
+  <string name="editor_ln">Nummern der einzelnen Linien anzeigen</string>
+  <string name="editor_ln_desc">Anzeigen oder verstecken der Liniennummern</string>
+  <string name="editor_toolbar">Zeige Toolbar</string>
+  <string name="editor_toolbar_desc">Anzeigen oder verstecken der Toolbar</string>
+  <string name="editor_tab">Tabs (Momentan nicht verfügbar)</string>
+  <string name="editor_tab_desc">Nutze "Tab" Modus in Sparkles</string>
+  <string name="editor_title">Formatieren</string>
+  <string name="editor_theme_title">Sora Editor Theme</string>
+  
+</resources>

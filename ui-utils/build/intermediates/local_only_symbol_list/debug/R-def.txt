@@ -1,0 +1,53 @@
+R_DEF: Internal format may change without notice
+local
+attr? preferenceDescription
+attr? preferenceGroupTitle
+attr? preferenceIcon
+attr? preferencePopupDescription
+attr? preferencePopupIcon
+attr? preferencePopupTitle
+attr? preferenceSwitchBg
+attr? preferenceSwitchDefaultValue
+attr? preferenceSwitchDescription
+attr? preferenceSwitchIcon
+attr? preferenceSwitchTitle
+attr? preferenceTitle
+drawable drawable_settings_item_background
+drawable ic_dot_24
+drawable shape_allow_button
+drawable shape_alone
+drawable shape_bottom
+drawable shape_deny_button
+drawable shape_dialog_background
+drawable shape_middle
+drawable shape_top
+id button1_text
+id button2_text
+id button_allow
+id button_deny
+id content_dialog
+id content_dialog_permission
+id dialog_icon
+id dialog_text
+id preference
+id preference_description
+id preference_group
+id preference_group_content
+id preference_group_title
+id preference_icon
+id preference_name
+id preference_switch
+id preference_title
+id root
+layout layout_dialog_permission
+layout layout_preference
+layout layout_preference_group
+layout layout_preference_switch
+layout layout_preference_switch_withicon
+layout layout_preference_withicon
+string common_word_allow
+string common_word_deny
+styleable Preference preferenceTitle preferenceDescription preferenceIcon
+styleable PreferenceGroup preferenceGroupTitle
+styleable PreferencePopup preferencePopupTitle preferencePopupDescription preferencePopupIcon
+styleable PreferenceSwitch preferenceSwitchTitle preferenceSwitchDescription preferenceSwitchDefaultValue preferenceSwitchIcon preferenceSwitchBg

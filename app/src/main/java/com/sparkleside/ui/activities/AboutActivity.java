@@ -189,6 +189,13 @@ public class AboutActivity extends BaseActivity {
         1,
         false);
     TeamMember(
+        "Heinrich",
+        Role.TRANSLATOR,
+        "https://github.com/HeinrichTheGermanNOTOffizier20",
+        getString(R.string.alex_phrase),
+        1,
+        false);    
+    TeamMember(
         "Fahim Abdullah",
         Role.TRANSLATOR,
         "https://github.com/nexavo999",

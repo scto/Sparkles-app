@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_word_allow">Allow</string>
+    <string name="common_word_deny">Deny</string>
+    <declare-styleable name="Preference">
+        <attr format="string" name="preferenceTitle"/>
+        <attr format="string" name="preferenceDescription"/>
+        <attr format="reference" name="preferenceIcon"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceGroup">
+        <attr format="string" name="preferenceGroupTitle"/>
+    </declare-styleable>
+    <declare-styleable name="PreferencePopup">
+        <attr format="string" name="preferencePopupTitle"/>
+        <attr format="string" name="preferencePopupDescription"/>
+        <attr format="reference" name="preferencePopupIcon"/>
+    </declare-styleable>
+    <declare-styleable name="PreferenceSwitch">
+        <attr format="string" name="preferenceSwitchTitle"/>
+        <attr format="string" name="preferenceSwitchDescription"/>
+        <attr format="boolean" name="preferenceSwitchDefaultValue"/>
+        <attr format="reference" name="preferenceSwitchIcon"/>
+        <attr format="string" name="preferenceSwitchBg"/>
+    </declare-styleable>
+</resources>

@@ -8,5 +8,5 @@
     <locale android:name = "zh-CN"/>           <!-- Mandarian (China)-->
      <locale android:name = "in-ID"/>           <!-- Indonesian (Indonesia)-->
      <locale android:name = "bn"/>           <!-- Bengali (Bangladesh)-->
-
+     <locale android:name = "de-DE"/>           <!-- Deutsch (Deutschland)-->
 </locale-config>
