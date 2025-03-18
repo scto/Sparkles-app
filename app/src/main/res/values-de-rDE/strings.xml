@@ -3,7 +3,7 @@
   <string name="app_name">Sparkles IDE</string>
   <string name="com_word_settings">Einstellungen</string>
   <string name="set_main">App Einstellungen</string>
-  <string name="set_main_desc">Ein paar von Sparkles' Aussehenseinstellungen</string>
+  <string name="set_main_desc">Ein paar von Sparkles Aussehenseinstellungen</string>
   <string name="common_word_allow">Erlauben</string>
   <string name="common_word_deny">Verweigern</string>
   <string name="set_editor">Code Editor</string>
@@ -74,7 +74,7 @@
   <string name="editor_toolbar">Zeige Toolbar</string>
   <string name="editor_toolbar_desc">Anzeigen oder verstecken der Toolbar</string>
   <string name="editor_tab">Tabs (Momentan nicht verfügbar)</string>
-  <string name="editor_tab_desc">Nutze "Tab" Modus in Sparkles</string>
+  <string name="editor_tab_desc">Nutze Tab Modus in Sparkles</string>
   <string name="editor_title">Formatieren</string>
   <string name="editor_theme_title">Sora Editor Theme</string>
   
