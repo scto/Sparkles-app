@@ -36,7 +36,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
         
         String htmlContent = getIntent().getStringExtra("html");
-        server = new WebServer(this, 11001, htmlContent);
+        server = new WebServer(this, 11001, htmlContent.replaceAll("<!-- dev-mode -->", "<script type=\"application/javascript\" src=\"/eruda.js\"></script>"));
         try {
             server.start();
         } catch (IOException e) {
@@ -86,7 +86,7 @@ public static class WebServer extends NanoHTTPD {
     public WebServer(Context context, int port, String htmlContent) {
         super(port);
         this.context = context;
-        this.htmlContent = htmlContent.replaceAll("<!-- dev-mode -->", '<script type="application/javascript" src="/eruda.js"></script>');
+        this.htmlContent = htmlContent;
     }
 
     @Override
