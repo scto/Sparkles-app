@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import android.graphics.Bitmap;
 import java.io.OutputStream;
+import android.content.Context;
 
 public class HtmlViewerActivity extends AppCompatActivity {
     private ActivityHtmlViewerBinding binding;
