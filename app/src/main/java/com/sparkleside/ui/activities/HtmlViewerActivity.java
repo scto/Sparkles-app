@@ -11,6 +11,8 @@ import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityHtmlViewerBinding;
 import fi.iki.elonen.NanoHTTPD;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class HtmlViewerActivity extends AppCompatActivity {
     private ActivityHtmlViewerBinding binding;
