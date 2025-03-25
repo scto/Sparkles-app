@@ -58,7 +58,7 @@ public class AboutActivity extends BaseActivity {
 
   private void configureDevelopers() {
     Glide.with(this).load("https://github.com/syntaxspin.png").into(binding.imgSyn);
-    Glide.with(this).load("https://github.com/yamenher.png").into(binding.imgYamen);
+    Glide.with(this).load("https://github.com/neoapps-dev.png").into(binding.imgNeo);
     Glide.with(this).load("https://github.com/trindadedev13.png").into(binding.imgTrindade);
 
     peekAndPop(
@@ -67,10 +67,10 @@ public class AboutActivity extends BaseActivity {
         getString(R.string.syntaxspin_phrase),
         binding.imgSyn);
     peekAndPop(
-        "NeoApps",
+        "NEOAPPS",
         "https://github.com/neoapps-dev.png",
         getString(R.string.neoapps_phrase),
-        binding.imgYamen);
+        binding.imgNeo);
     peekAndPop(
         "Aquiles Trindade",
         "https://github.com/trindadedev13.png",
