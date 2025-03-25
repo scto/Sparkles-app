@@ -72,8 +72,8 @@ public class HtmlViewerActivity extends AppCompatActivity {
         binding.webview.setWebChromeClient(new WebChromeClient());
         binding.webview.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
                 injectEruda();
             }
         });
