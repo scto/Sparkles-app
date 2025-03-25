@@ -61,6 +61,13 @@ public class HtmlViewerActivity extends AppCompatActivity {
     private void setupWebView() {
         WebSettings webSettings = binding.webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            webSettings.setAllowFileAccessFromFileURLs(true);
+            webSettings.setAllowUniversalAccessFromFileURLs(true);
+        }
+        webSettings.setWebChromeClient(new WebChromeClient());
         binding.webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
