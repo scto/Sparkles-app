@@ -1,6 +1,12 @@
 package com.sparkleside.ui.activities;
 
 import android.os.Bundle;
+import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import java.io.IOException;
+import java.io.InputStream;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.transition.platform.MaterialContainerTransform;
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
