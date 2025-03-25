@@ -27,6 +27,33 @@ public class HtmlViewerActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
+    setupWebView();
     binding.webview.loadUrl("data:text/html,".concat(getIntent().getStringExtra("html")));
   }
+
+  private void injectEruda() {
+        try {
+            InputStream is = getAssets().open("eruda.min.js");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String jsCode = new String(buffer);
+            binding.webview.loadUrl("javascript:(function() {" + jsCode + " eruda.init(); })();");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+  
+  private void setupWebView() {
+        WebSettings webSettings = binding.webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        binding.webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                injectEruda();
+            }
+        });
+    }
 }
