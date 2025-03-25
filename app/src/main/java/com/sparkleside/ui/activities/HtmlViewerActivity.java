@@ -86,7 +86,7 @@ public static class WebServer extends NanoHTTPD {
     public WebServer(Context context, int port, String htmlContent) {
         super(port);
         this.context = context;
-        this.htmlContent = htmlContent;
+        this.htmlContent = htmlContent.replaceAll("<dev-mode>", '<script type="application/javascript" src="/eruda.js"></script>');
     }
 
     @Override
