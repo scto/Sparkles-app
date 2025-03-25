@@ -57,6 +57,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
     
     private void injectEruda() {
         binding.webview.loadUrl("javascript:(function(){var s=document.createElement('script');s.type='application/javascript';s.src='/eruda.js';document.head.appendChild(s);})();");
+        binding.webview.loadUrl("javascript:eruda.init();");
     }
     
     private void setupWebView() {
