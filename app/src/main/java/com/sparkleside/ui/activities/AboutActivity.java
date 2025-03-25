@@ -67,9 +67,9 @@ public class AboutActivity extends BaseActivity {
         getString(R.string.syntaxspin_phrase),
         binding.imgSyn);
     peekAndPop(
-        "Yamen",
-        "https://github.com/YamenHer.png",
-        getString(R.string.yamenher_phrase),
+        "NeoApps",
+        "https://github.com/neoapps-dev.png",
+        getString(R.string.neoapps_phrase),
         binding.imgYamen);
     peekAndPop(
         "Aquiles Trindade",
@@ -91,7 +91,7 @@ public class AboutActivity extends BaseActivity {
 
     binding.hanzo.setOnClickListener(
         v -> {
-          openURL("https://github.com/yamenher");
+          openURL("https://github.com/neoapps-dev");
         });
 
     binding.syn.setOnClickListener(
@@ -130,10 +130,10 @@ public class AboutActivity extends BaseActivity {
         false);
 
     TeamMember(
-        "NEOAPPS",
+        "YamenHer",
         Role.DEVELOPER,
-        "https://github.com/neoapps-dev",
-        getString(R.string.neoapps_phrase),
+        "https://github.com/yamenher",
+        getString(R.string.yamenher_phrase),
         1,
         false);
     TeamMember(
