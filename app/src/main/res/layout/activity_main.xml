@@ -284,7 +284,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:drawablePadding="16dp"
                     android:drawableStart="@drawable/markdown_24px"
-                    android:text="MarkDown"
+                    android:text="Markdown"
                     android:id="@+id/markdown"
                     android:layout_weight="1"
                     android:textAppearance="?attr/textAppearanceSubtitle1" />
