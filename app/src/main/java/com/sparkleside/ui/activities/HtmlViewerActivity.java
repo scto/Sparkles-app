@@ -54,17 +54,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
     }
     
     private void injectEruda() {
-        try {
-            InputStream is = getAssets().open("eruda.min.js");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String jsCode = new String(buffer);
-            binding.webview.loadUrl("javascript:(function() {" + jsCode + " eruda.init(); })();");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        binding.webview.loadUrl("javascript:(function(){var s=document.createElement('script');s.type='application/javascript';s.src='/eruda.js';document.head.appendChild(s);})();");
     }
     
     private void setupWebView() {
@@ -73,7 +63,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
         binding.webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageFinished(view, url);
+                super.onPageStarted(view, url, favicon);
                 injectEruda();
             }
         });
@@ -87,9 +77,26 @@ public class HtmlViewerActivity extends AppCompatActivity {
             this.htmlContent = htmlContent;
         }
         
-        @Override
-        public Response serve(IHTTPSession session) {
-            return newFixedLengthResponse(Response.Status.OK, "text/html", htmlContent); // TODO: make it dynamic mime types instead of just text/html
-        }
+    @Override
+    public Response serve(IHTTPSession session) {
+        String uri = session.getUri();
+        if (uri.equals("/") || uri.startsWith("/")) {
+            if (uri.equals("/eruda.js")) {
+                try {
+                    InputStream inputStream = getAssets().open("eruda.min.js");
+                    byte[] buffer = new byte[inputStream.available()];
+                    inputStream.read(buffer);
+                    inputStream.close();
+                    return newFixedLengthResponse(Response.Status.OK, "application/javascript", new String(buffer));
+                } catch (IOException e) {
+                    return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "File not found");
+                }
+            }
+        return newFixedLengthResponse(Response.Status.OK, "text/html", htmlContent);
+    }
+
+    return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "404 Not Found");
+}
+
     }
 }
