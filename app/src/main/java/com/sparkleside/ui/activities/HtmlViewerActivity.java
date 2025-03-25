@@ -68,7 +68,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
             webSettings.setAllowFileAccessFromFileURLs(true);
             webSettings.setAllowUniversalAccessFromFileURLs(true);
         }
-        webSettings.setWebChromeClient(new WebChromeClient());
+        binding.webview.setWebChromeClient(new WebChromeClient());
         binding.webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
