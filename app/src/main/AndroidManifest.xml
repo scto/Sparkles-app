@@ -19,6 +19,7 @@
     android:label="@string/app_name"
     android:localeConfig="@xml/local_config"
     android:roundIcon="@mipmap/ic_launcher"
+    android:usesCleartextTraffic="true"
     android:supportsRtl="false"
     android:theme="@style/Theme.Sparkles">
 
