@@ -9,15 +9,13 @@ import com.google.android.material.transition.platform.MaterialContainerTransfor
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 import com.sparkleside.R;
 import com.sparkleside.databinding.ActivityHtmlViewerBinding;
-import java.io.*;
-import java.net.*;
-import java.util.concurrent.Executors;
+import fi.iki.elonen.NanoHTTPD;
+import java.io.IOException;
 
 public class HtmlViewerActivity extends AppCompatActivity {
     private ActivityHtmlViewerBinding binding;
-    private ServerSocket serverSocket;
-    private boolean isRunning = true;
-
+    private WebServer server;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivityHtmlViewerBinding.inflate(getLayoutInflater());
@@ -31,51 +29,27 @@ public class HtmlViewerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        startHttpServer();
-        setupWebView();
-        binding.webview.loadUrl("http://127.0.0.1:11001");
-    }
-
-    private void startHttpServer() {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            try {
-                serverSocket = new ServerSocket(11001);
-                while (isRunning) {
-                    Socket socket = serverSocket.accept();
-                    new Thread(() -> handleRequest(socket)).start();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void handleRequest(Socket socket) {
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             OutputStream out = socket.getOutputStream()) {
-            in.readLine();
-            String html = getIntent().getStringExtra("html");
-            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + html.length() + "\r\n\r\n" + html;
-            out.write(response.getBytes());
-            out.flush();
-            socket.close();
+        
+        String htmlContent = getIntent().getStringExtra("html");
+        server = new WebServer(11001, htmlContent);
+        try {
+            server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        setupWebView();
+        binding.webview.loadUrl("http://127.0.0.1:11001");
     }
-
-    private void setupWebView() {
-        WebSettings webSettings = binding.webview.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        binding.webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                injectEruda();
-            }
-        });
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (server != null) {
+            server.stop();
+        }
     }
-
+    
     private void injectEruda() {
         try {
             InputStream is = getAssets().open("eruda.min.js");
@@ -89,17 +63,30 @@ public class HtmlViewerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        isRunning = false;
-        try {
-            if (serverSocket != null) {
-                serverSocket.close();
+    
+    private void setupWebView() {
+        WebSettings webSettings = binding.webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        binding.webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                injectEruda();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        });
+    }
+    
+    public static class WebServer extends NanoHTTPD {
+        private final String htmlContent;
+        
+        public WebServer(int port, String htmlContent) {
+            super(port);
+            this.htmlContent = htmlContent;
+        }
+        
+        @Override
+        public Response serve(IHTTPSession session) {
+            return newFixedLengthResponse(Response.Status.OK, "text/html", htmlContent); // TODO: make it dynamic mime types instead of just text/html
         }
     }
 }
