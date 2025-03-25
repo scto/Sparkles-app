@@ -79,6 +79,8 @@ dependencies {
   implementation("nl.dionsegijn:konfetti-xml:2.0.4")
   implementation("com.mikepenz:aboutlibraries:11.2.3")
 
+  implementation("org.nanohttpd:nanohttpd:2.3.1")
+
   implementation("io.noties.markwon:core:4.6.2")
   implementation("io.noties.markwon:html:4.6.2")
   implementation("io.noties.markwon:image:4.6.2")
