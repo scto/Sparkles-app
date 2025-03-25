@@ -71,7 +71,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         binding.webview.setWebViewClient(new WebViewClient() {
             @Override
-            public void onPageFinished(WebView view, String url) {
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageFinished(view, url);
                 injectEruda();
             }
