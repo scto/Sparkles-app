@@ -177,7 +177,7 @@
               android:layout_height="60dp"
               android:layout_width="60dp"
               app:shapeAppearance="@style/Theme.Sparkles.CircleImageView"
-              android:id="@+id/img_yamen" />
+              android:id="@+id/img_neo" />
 
             <TextView
               android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
               android:textSize="12sp"
               android:textColor="?colorOnSurface"
               android:id="@+id/textview4"
-              android:text="YamenHer" />
+              android:text="NEOAPPS" />
 
           </LinearLayout>
 
