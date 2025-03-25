@@ -34,7 +34,7 @@ public class HtmlViewerActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
         
         String htmlContent = getIntent().getStringExtra("html");
-        server = new WebServer(11001, htmlContent);
+        server = new WebServer(this, 11001, htmlContent);
         try {
             server.start();
         } catch (IOException e) {
@@ -69,34 +69,34 @@ public class HtmlViewerActivity extends AppCompatActivity {
         });
     }
     
-    public static class WebServer extends NanoHTTPD {
-        private final String htmlContent;
-        
-        public WebServer(int port, String htmlContent) {
-            super(port);
-            this.htmlContent = htmlContent;
-        }
-        
+public static class WebServer extends NanoHTTPD {
+    private final String htmlContent;
+    private final Context context;
+
+    public WebServer(Context context, int port, String htmlContent) {
+        super(port);
+        this.context = context;
+        this.htmlContent = htmlContent;
+    }
+
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
-        if (uri.equals("/") || uri.startsWith("/")) {
-            if (uri.equals("/eruda.js")) {
-                try {
-                    InputStream inputStream = getAssets().open("eruda.min.js");
-                    byte[] buffer = new byte[inputStream.available()];
-                    inputStream.read(buffer);
-                    inputStream.close();
-                    return newFixedLengthResponse(Response.Status.OK, "application/javascript", new String(buffer));
-                } catch (IOException e) {
-                    return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "File not found");
-                }
+
+        if (uri.equals("/eruda.js")) {
+            try {
+                InputStream inputStream = context.getAssets().open("eruda.min.js");
+                byte[] buffer = new byte[inputStream.available()];
+                inputStream.read(buffer);
+                inputStream.close();
+                return newFixedLengthResponse(Response.Status.OK, "application/javascript", new String(buffer));
+            } catch (IOException e) {
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "File not found");
             }
+        }
+
         return newFixedLengthResponse(Response.Status.OK, "text/html", htmlContent);
     }
-
-    return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "404 Not Found");
 }
 
-    }
 }
