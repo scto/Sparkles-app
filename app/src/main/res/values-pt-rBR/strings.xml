@@ -56,6 +56,7 @@
   <string name="permission_dialog_text">Conceder a todos os arquivos permissão de acesso para fazer o Sparkles IDE funcionar corretamente</string>
   <string name="Grant">Conceder</string>
   <string name="Deny">Negar</string>
+  <string name="restart_app_message">Para aplicar alterações reinicie o app</string>
 
   <!-- TEAM BIO -->
   <string name="syntaxspin_phrase">Um Amante de Material You e Desenvolvedor Android/Web</string>
