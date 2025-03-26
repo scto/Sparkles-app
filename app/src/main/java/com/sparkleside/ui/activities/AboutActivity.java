@@ -155,7 +155,7 @@ public class AboutActivity extends BaseActivity {
     TeamMember(
         "Jeiel Lima Miranda",
         Role.DEVELOPER,
-        "https://github.com/jetrom17",
+        "https://github.com/Jeiel0rbit",
         getString(R.string.jaiel_lima_phrase),
         1,
         false);
