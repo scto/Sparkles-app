@@ -217,6 +217,7 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
         Typeface.createFromAsset(getAssets(), "fonts/jetbrainsmono.ttf"));
 
     binding.tabs.addTab(binding.tabs.newTab().setText("Blank.txt"));
+    binding.tabs.addTab(binding.tabs.newTab().setText("TEST.txt"));
 
     ViewCompat.setOnApplyWindowInsetsListener(
         binding.fab,
