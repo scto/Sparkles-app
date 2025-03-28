@@ -353,7 +353,7 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
   @Override
   protected void onPause() {
     super.onPause();
-    lastEditedCode = binding.editor.getText();
+    lastEditedCode = binding.editor.getText().toString();;
   }
 
   @Override
