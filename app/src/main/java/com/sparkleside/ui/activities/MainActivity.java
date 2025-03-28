@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
   private AlertDialog permissionDialog;
+  private String lastEditedCode;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -346,6 +347,13 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
         }
       }
     }
+    binding.editor.setText(lastEditedCode);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    lastEditedCode = binding.editor.getText();
   }
 
   @Override
