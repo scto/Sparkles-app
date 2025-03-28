@@ -42,6 +42,7 @@ import com.sparkleside.ui.base.BaseActivity;
 import com.sparkleside.ui.components.ExpandableLayout;
 import com.sparkleside.ui.components.executorservice.FileOperationExecutor;
 import com.sparkleside.ui.editor.schemes.SparklesScheme;
+import com.sparkleside.util.TempCode;
 import com.zyron.filetree.events.FileTreeEventListener;
 import com.zyron.filetree.provider.FileTreeIconProvider;
 import io.github.rosemoe.sora.widget.EditorSearcher;
@@ -63,8 +64,7 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
   private FileOperationExecutor fileoperate;
   private SideSheetDialog sideSheetDialog;
   private AlertDialog permissionDialog;
-  private String lastEditedCode;
-
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     MaterialSharedAxis exitTransition = new MaterialSharedAxis(MaterialSharedAxis.X, true);
@@ -323,6 +323,7 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
   @Override
   protected void onDestroy() {
     super.onDestroy();
+    TempCode.tempCode = binding.editor.getText().toString();
     this.binding = null;
   }
 
@@ -347,13 +348,12 @@ public class MainActivity extends BaseActivity implements FileTreeEventListener 
         }
       }
     }
-    binding.editor.setText(lastEditedCode);
+    binding.editor.setText(TempCode.tempCode);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    lastEditedCode = binding.editor.getText().toString();;
   }
 
   @Override
